@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using KinematicCharacterController;
 
 public enum ComboState
 {
@@ -24,6 +25,7 @@ public class PlayerAttack : MonoBehaviour
     public ComboState currentComboState;
 
     public CharacterMovement charaMove;
+    public MyCharacterController character;
 
     public Transform attackPoint;
     public Vector3 attackRange;
@@ -38,10 +40,15 @@ public class PlayerAttack : MonoBehaviour
     public int comboLength;
     public int currentComboLength;
 
+    private bool inputAttack;
+    private bool inputDodge;
+    private bool inputMagic;
+
     void Awake()
     {
         playerAnimation = GetComponentInChildren<CharacterAnimation>();
         charaMove = GetComponent<CharacterMovement>();
+        character = GetComponent<MyCharacterController>();
     }
 
     private void Start()
@@ -60,13 +67,13 @@ public class PlayerAttack : MonoBehaviour
                 CheckAttack();
                 break;
             case ComboState.JAB:
-                Jab();
+                CheckAttack();
                 break;
             case ComboState.FINISH:
                 Finish();
                 break;
             case ComboState.DODGE:
-                Dodge();
+                CheckAttack();
                 break;
             case ComboState.MAGIC:
                 Magic();
@@ -76,9 +83,16 @@ public class PlayerAttack : MonoBehaviour
         ResetComboState();
     }
 
+    public void SetInputs(bool attack, bool dodge, bool magic)
+	{
+        inputAttack = attack;
+        inputDodge = dodge;
+        inputMagic = magic;
+	}
+
     void AttackCombo()
     {
-        if (Input.GetButtonDown("Fire1")) // punch
+        if (inputAttack) // punch
         {
             if (currentComboState == ComboState.JAB && cancelComboTimer > 0 || currentComboState == ComboState.DODGE || currentComboState == ComboState.MAGIC) // don't punch if end of combo/kicking
                 return;
@@ -100,7 +114,7 @@ public class PlayerAttack : MonoBehaviour
             }*/
         }
 
-        if (Input.GetButtonDown("Fire2") && charaMove.isGrounded)
+        if (inputDodge && charaMove.isGrounded)
         {
             if (currentComboState != ComboState.NONE)
                 return;
@@ -115,7 +129,7 @@ public class PlayerAttack : MonoBehaviour
             Debug.Log("Dodge");
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (inputMagic)
         {
             if (currentComboState != ComboState.NONE)
                 return;
@@ -183,26 +197,20 @@ public class PlayerAttack : MonoBehaviour
 
 	private void CheckAttack()
 	{
-        if (Input.GetButtonDown("Fire1") && JabConditions()) // check if player attacks
+        if (inputAttack) // check if player attacks
         {
-            SetAttack("Attack");
-            playerAnimation.Attack();
-            if (!charaMove.isGrounded)
-            {
-                charaMove.AirAttackJump(1f, false);
-            }
-            Debug.Log("Jab");
-            TrySetState(ComboState.JAB);
-            return;
+            Jab();
         }
-        else if (Input.GetButtonDown("Fire2") && DodgeConditions()) // check if player dodges
+        else if (inputDodge) // check if player dodges
         {
-            SetAttack("Dodge");
-            playerAnimation.Guard();
-            Debug.Log("Dodge");
-            TrySetState(ComboState.DODGE);
+            Dodge();
         }
     }
+
+    public void SetAction(ComboState newState)
+	{
+        TrySetState(newState);
+	}
 
     private bool TrySetState(ComboState newState)
 	{
@@ -222,15 +230,41 @@ public class PlayerAttack : MonoBehaviour
     }
     private bool DodgeConditions()
 	{
-        if (equippedAbilities.IsEquipped("Dodge") && (currentComboState == ComboState.NONE && charaMove.isGrounded))
+        if (equippedAbilities.IsEquipped("Dodge Roll") && (currentComboState == ComboState.NONE && character.IsGrounded()))
             return true;
         else return false;
 
     }
-    void Jab() { CheckAttack(); }
-    void Finish() { }
-    void Dodge() { CheckAttack(); }
-    void Magic() { }
+
+    private void None() { }
+
+    private void Jab() {
+        if (JabConditions()) // check if player attacks
+        {
+            SetAttack("Attack");
+            playerAnimation.Attack();
+            if (!character.IsGrounded())
+            {
+                //charaMove.AirAttackJump(1f, false);
+            }
+            Debug.Log("Jab");
+            //TrySetState(ComboState.JAB);
+            return;
+        }
+    }
+
+    private void Finish() { }
+
+    private void Dodge() {
+        if (DodgeConditions()) // check if player dodges
+        {
+            SetAttack("Dodge Roll");
+            playerAnimation.Guard();
+            Debug.Log("Dodge");
+            //TrySetState(ComboState.DODGE);
+        }
+    }
+    private void Magic() { }
 
 	#endregion
 

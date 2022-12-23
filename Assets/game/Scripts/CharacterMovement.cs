@@ -29,6 +29,8 @@ public class CharacterMovement : MonoBehaviour
     int jumpTimes = 0;
     private CharacterAnimation playerAnim;
 
+    private bool hasJumped;
+
     private Animator _rootAnim;
 
     private void Start()
@@ -49,6 +51,8 @@ public class CharacterMovement : MonoBehaviour
         //Debug.Log(isGrounded ? "GROUNDED" : "NOT GROUNDED");
         isGrounded = Physics.CheckSphere(groundCheck.position, _groundDistance, groundMask); //checks for collision with floor using a small invisible sphere; returns true/false
         playerAnim.IsGrounded(isGrounded);
+
+        Debug.Log(inputDirection + "" + hasJumped);
 
         Move();
 
@@ -84,7 +88,7 @@ public class CharacterMovement : MonoBehaviour
             _moveSpeed = _defaultMoveSpeed;
         }*/
 
-        inputDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized; // get direction player is moving, returns 1 if moving that direction
+        //inputDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized; // get direction player is moving, returns 1 if moving that direction
         if (inputDirection.magnitude >= .1f && !isAttacking)
         {
             targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y; // where object should rotate to (keeps movement to camera focus)
@@ -110,13 +114,23 @@ public class CharacterMovement : MonoBehaviour
         return inputDirection;
 	}
 
+    public void SetJumpInput(bool jumped)
+	{
+        hasJumped = jumped;
+	}
+
+    public void SetInputDirection(float x, float y)
+	{
+        inputDirection = new Vector3(x, 0, y);
+	}
+
     void SimulateGravity()
     {
         jumpVelocity.y += _gravity * Time.deltaTime; //need a velocity variable to simulate real gravity
         controller.Move(jumpVelocity * Time.deltaTime); //multiply times deltaTime twice, as is shown on velocity equation
         if (jumpVelocity.z > 0) jumpVelocity.z += _gravity / 8f * Time.deltaTime;
         else if (jumpVelocity.z < 0 || isGrounded) jumpVelocity.z = 0;
-        if (Input.GetButtonDown("Jump") && (isGrounded || jumpTimes < 2) && !isAttacking)
+        if (hasJumped && (isGrounded || jumpTimes < 2) && !isAttacking)
         {
             jumpVelocity.y = Mathf.Sqrt(_jumpHeight * -2f * _gravity); //force required to jump according to physics. (Square root of jump height x (-2) x gravity)
             //_moveSpeed = _sprintSpeed;
@@ -124,7 +138,7 @@ public class CharacterMovement : MonoBehaviour
             //if (jumpTimes == 2) _attackForward = 20; // double flight forward boost
             playerAnim.Jump(true);
         }
-        else if (Input.GetButtonUp("Jump") || isGrounded) playerAnim.Jump(false);
+        else if (hasJumped || isGrounded) playerAnim.Jump(false);
     }
 
     public void AirAttackJump(float attackHeight, bool gravityOff)

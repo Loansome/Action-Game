@@ -4,7 +4,7 @@ using UnityEngine;
 using KinematicCharacterController;
 using System;
 
-namespace KinematicCharacterController.Walkthrough.MultipleMovementStates
+namespace KinematicCharacterController
 {
     public enum CharacterState
     {
@@ -24,6 +24,8 @@ namespace KinematicCharacterController.Walkthrough.MultipleMovementStates
     public class MyCharacterController : MonoBehaviour, ICharacterController
     {
         public KinematicCharacterMotor Motor;
+
+        private CharacterAnimation playerAnim;
 
         [Header("Stable Movement")]
         public float MaxStableMoveSpeed = 10f;
@@ -69,7 +71,12 @@ namespace KinematicCharacterController.Walkthrough.MultipleMovementStates
         private bool _shouldBeCrouching = false;
         private bool _isCrouching = false;
 
-        private void Start()
+		private void Awake()
+        {
+            playerAnim = GetComponentInChildren<CharacterAnimation>();
+        }
+
+		private void Start()
         {
             // Assign to motor
             Motor.CharacterController = this;
@@ -77,6 +84,11 @@ namespace KinematicCharacterController.Walkthrough.MultipleMovementStates
             // Handle initial state
             TransitionToState(CharacterState.Default);
         }
+
+        public bool IsGrounded()
+		{
+            return Motor.GroundingStatus.IsStableOnGround;
+		}
 
         /// <summary>
         /// Handles movement state transitions and enter/exit callbacks
@@ -139,7 +151,7 @@ namespace KinematicCharacterController.Walkthrough.MultipleMovementStates
                     {
                         // Move and look inputs
                         _moveInputVector = cameraPlanarRotation * moveInputVector;
-                        _lookInputVector = cameraPlanarDirection;
+                        _lookInputVector = _moveInputVector.normalized;
 
                         // Jumping input
                         if (inputs.JumpDown)
@@ -261,6 +273,7 @@ namespace KinematicCharacterController.Walkthrough.MultipleMovementStates
                         {
                             _jumpedThisFrame = false;
                             _timeSinceJumpRequested += deltaTime;
+                            playerAnim.Jump(false);
                             if (_jumpRequested)
                             {
                                 // Handle double jump
@@ -275,6 +288,7 @@ namespace KinematicCharacterController.Walkthrough.MultipleMovementStates
                                         _jumpRequested = false;
                                         _doubleJumpConsumed = true;
                                         _jumpedThisFrame = true;
+                                        playerAnim.Jump(true);
                                     }
                                 }
 
@@ -302,6 +316,8 @@ namespace KinematicCharacterController.Walkthrough.MultipleMovementStates
                                     _jumpRequested = false;
                                     _jumpConsumed = true;
                                     _jumpedThisFrame = true;
+
+                                    playerAnim.Jump(true);
                                 }
                             }
 
@@ -345,6 +361,8 @@ namespace KinematicCharacterController.Walkthrough.MultipleMovementStates
                                 {
                                     _doubleJumpConsumed = false;
                                     _jumpConsumed = false;
+
+                                    playerAnim.IsGrounded(true);
                                 }
                                 _timeSinceLastAbleToJump = 0f;
                             }
@@ -352,6 +370,8 @@ namespace KinematicCharacterController.Walkthrough.MultipleMovementStates
                             {
                                 // Keep track of time since we were last able to jump (for grace period)
                                 _timeSinceLastAbleToJump += deltaTime;
+
+                                playerAnim.IsGrounded(false);
                             }
                         }
 
