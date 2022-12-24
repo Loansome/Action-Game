@@ -9,6 +9,7 @@ namespace KinematicCharacterController
     public enum CharacterState
     {
         Default,
+        Action,
     }
 
     public struct PlayerCharacterInputs

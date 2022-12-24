@@ -39,4 +39,14 @@ public class AbilityHolder : MonoBehaviour
 	{
 		return (AttackData)FindAbility(name).abilityData;
 	}
+
+	private void OnDrawGizmosSelected()
+	{
+		foreach (var item in abilities)
+		{
+			AttackData currentAbility = (AttackData)item.abilityData;
+			if (currentAbility != null)
+				Gizmos.DrawWireSphere(transform.position, currentAbility.activationDistance);
+		}
+	}
 }
