@@ -46,7 +46,12 @@ public class AbilityHolder : MonoBehaviour
 		{
 			AttackData currentAbility = (AttackData)item.abilityData;
 			if (currentAbility != null)
-				Gizmos.DrawWireSphere(transform.position, currentAbility.activationDistance);
+			{
+				Gizmos.color = Color.yellow;
+				Gizmos.DrawWireSphere(transform.position, currentAbility.activationDistance.x);
+				Gizmos.color = Color.cyan;
+				Gizmos.DrawWireSphere(transform.position, currentAbility.activationDistance.y);
+			}
 		}
 	}
 }

@@ -23,6 +23,6 @@ public class AttackData : AbilityData
     public bool isFinisher;
     public bool isAOE;
     public bool isRanged;
-    public float activationDistance;
+    public Vector2 activationDistance;
 
 }
