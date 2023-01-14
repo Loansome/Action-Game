@@ -14,7 +14,7 @@ public class CharacterMovement : MonoBehaviour
     public float _jumpHeight = 3f;
 
     public float _attackForward = 0f;
-    public bool isAttacking = false;
+    public bool canMove = true;
 
     [Header("Ground Check Settings")]
     public Transform groundCheck;
@@ -89,7 +89,7 @@ public class CharacterMovement : MonoBehaviour
         }*/
 
         //inputDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized; // get direction player is moving, returns 1 if moving that direction
-        if (inputDirection.magnitude >= .1f && !isAttacking)
+        if (inputDirection.magnitude >= .1f && canMove)
         {
             targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y; // where object should rotate to (keeps movement to camera focus)
             smoothedAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime); // smooth between rotation
@@ -130,7 +130,7 @@ public class CharacterMovement : MonoBehaviour
         controller.Move(jumpVelocity * Time.deltaTime); //multiply times deltaTime twice, as is shown on velocity equation
         if (jumpVelocity.z > 0) jumpVelocity.z += _gravity / 8f * Time.deltaTime;
         else if (jumpVelocity.z < 0 || isGrounded) jumpVelocity.z = 0;
-        if (hasJumped && (isGrounded || jumpTimes < 2) && !isAttacking)
+        if (hasJumped && (isGrounded || jumpTimes < 2) && canMove)
         {
             jumpVelocity.y = Mathf.Sqrt(_jumpHeight * -2f * _gravity); //force required to jump according to physics. (Square root of jump height x (-2) x gravity)
             //_moveSpeed = _sprintSpeed;

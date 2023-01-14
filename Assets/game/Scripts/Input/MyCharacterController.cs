@@ -9,7 +9,7 @@ namespace KinematicCharacterController
     public enum CharacterState
     {
         Default,
-        Action,
+        Attack,
     }
 
     public struct PlayerCharacterInputs
@@ -18,6 +18,7 @@ namespace KinematicCharacterController
         public float MoveAxisRight;
         public Quaternion CameraRotation;
         public bool JumpDown;
+        public bool Attack;
         public bool CrouchDown;
         public bool CrouchUp;
     }
@@ -49,6 +50,9 @@ namespace KinematicCharacterController
         public float JumpPreGroundingGraceTime = 0f;
         public float JumpPostGroundingGraceTime = 0f;
 
+        [Header("Attack")]
+        public float AttackMoveSpeed = 10f;
+
         [Header("Misc")]
         public List<Collider> IgnoredColliders = new List<Collider>();
         public bool OrientTowardsGravity = false;
@@ -71,6 +75,12 @@ namespace KinematicCharacterController
         private Vector3 _internalVelocityAdd = Vector3.zero;
         private bool _shouldBeCrouching = false;
         private bool _isCrouching = false;
+
+        private Vector3 _attackMoveVelocity;
+        private Vector2 _targetCurrentPosition;
+        private Vector2 _targetDirection;
+        private AnimationClip _currentAnimation;
+        private AnimationSet _currentSet;
 
 		private void Awake()
         {
@@ -113,6 +123,13 @@ namespace KinematicCharacterController
                     {
                         break;
                     }
+                case CharacterState.Attack:
+					{
+                        // set the movement and lock on to enemy
+                        _attackMoveVelocity = Motor.CharacterForward * playerAnim.getRootCurve();
+                        _targetDirection = _lookInputVector; //_targetCurrentPosition - new Vector2(transform.position.x, transform.position.z);
+                        break;
+					}
             }
         }
 
@@ -137,6 +154,11 @@ namespace KinematicCharacterController
         {
             // Clamp input
             Vector3 moveInputVector = Vector3.ClampMagnitude(new Vector3(inputs.MoveAxisRight, 0f, inputs.MoveAxisForward), 1f);
+
+            if (inputs.Attack)
+			{
+                TransitionToState(CharacterState.Attack);
+			}
 
             // Calculate camera direction and rotation on the character plane
             Vector3 cameraPlanarDirection = Vector3.ProjectOnPlane(inputs.CameraRotation * Vector3.forward, Motor.CharacterUp).normalized;
@@ -189,6 +211,28 @@ namespace KinematicCharacterController
         /// </summary>
         public void BeforeCharacterUpdate(float deltaTime)
         {
+            switch (CurrentCharacterState)
+            {
+                case CharacterState.Default:
+                    {
+                        break;
+                    }
+                case CharacterState.Attack:
+                    {
+                        // find the current animation that's playing, if it wasn't already set
+                        /*if (_currentAnimation == null || _currentAnimation != playerAnim.getCurrentAnimation())
+                        {
+                            _currentAnimation = playerAnim.getCurrentAnimation();
+                            Debug.Log(_currentAnimation.name);
+                        }*/
+                        if (playerAnim.getAnimationSet() != AnimationSet.Idle && _currentSet != playerAnim.getAnimationSet())
+						{
+                            _currentSet = playerAnim.getAnimationSet();
+                            Debug.Log("Controller: " + _currentSet);
+                        }
+                        break;
+                    }
+            }
         }
 
         /// <summary>
@@ -215,6 +259,15 @@ namespace KinematicCharacterController
                             // Rotate from current up to invert gravity
                             currentRotation = Quaternion.FromToRotation((currentRotation * Vector3.up), -Gravity) * currentRotation;
                         }
+                        break;
+                    }
+                case CharacterState.Attack:
+                    {
+                        // Smoothly interpolate from current to target look direction (in this case, towards the target)
+                        Vector3 smoothedLookInputDirection = Vector3.Slerp(Motor.CharacterForward, _targetDirection, 1 - Mathf.Exp(-OrientationSharpness * deltaTime)).normalized;
+
+                        // Set the current rotation (which will be used by the KinematicCharacterMotor)
+                        currentRotation = Quaternion.LookRotation(smoothedLookInputDirection, Motor.CharacterUp);
                         break;
                     }
             }
@@ -334,6 +387,14 @@ namespace KinematicCharacterController
                         }
                         break;
                     }
+                case CharacterState.Attack:
+					{
+                        // when attacking, attach velocities to keep it moving
+                        currentVelocity = Motor.CharacterForward * playerAnim.getRootCurve() * AttackMoveSpeed;
+                        currentVelocity += Gravity * deltaTime;
+                        currentVelocity *= (1f / (1f + (Drag * deltaTime)));
+                        break;
+					}
             }
         }
 
@@ -400,6 +461,21 @@ namespace KinematicCharacterController
                         }
                         break;
                     }
+                case CharacterState.Attack:
+                    {
+                        // if the attack/animation finished, reset it and return back to idle
+                        /*if (!playerAnim.isPlaying(_currentAnimation.name)) {
+                            Debug.Log(playerAnim.isPlaying(_currentAnimation.name));
+                            _currentAnimation = null;
+                            TransitionToState(CharacterState.Default);
+                            Debug.Log("Now set to default state");
+						}*/
+                        if (playerAnim.getAnimationSet() == AnimationSet.Idle)
+						{
+                            TransitionToState(CharacterState.Default);
+						}
+                        break;
+					}
             }
         }
 

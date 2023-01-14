@@ -914,7 +914,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player no root
+  m_Name: old Player no root
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Walk

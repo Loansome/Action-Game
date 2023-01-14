@@ -29,4 +29,5 @@ MonoBehaviour:
   isFinisher: 0
   isAOE: 0
   isRanged: 0
-  activationDistance: 0
+  activationDistance: {x: 0, y: 0}
+  animation: 3

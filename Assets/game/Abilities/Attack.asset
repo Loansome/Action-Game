@@ -30,3 +30,4 @@ MonoBehaviour:
   isAOE: 0
   isRanged: 0
   activationDistance: {x: 1, y: 2}
+  animation: 2

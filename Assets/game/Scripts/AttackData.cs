@@ -25,4 +25,6 @@ public class AttackData : AbilityData
     public bool isRanged;
     public Vector2 activationDistance;
 
+    public AnimationSet animation;
+
 }

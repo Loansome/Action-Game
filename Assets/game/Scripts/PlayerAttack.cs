@@ -188,6 +188,7 @@ public class PlayerAttack : MonoBehaviour
     private void SetAttack(string attackName)
 	{
         currentAttack = equippedAbilities.GetAttackData(attackName);
+        playerAnimation.TriggerAnimation(currentAttack.animation);
         activateTimerToReset = true;
         currentComboTimer = currentAttack.duration;
         cancelComboTimer = currentAttack.cancelTime;
@@ -274,12 +275,12 @@ public class PlayerAttack : MonoBehaviour
         {
             currentComboTimer -= Time.deltaTime;
             cancelComboTimer -= Time.deltaTime;
-            charaMove.isAttacking = true;
+            charaMove.canMove = false;
             if (currentComboTimer <= 0f)
             {
                 currentComboState = ComboState.NONE;
                 activateTimerToReset = false;
-                charaMove.isAttacking = false;
+                charaMove.canMove = true;
                 Debug.Log("RESET");
             }
         }
