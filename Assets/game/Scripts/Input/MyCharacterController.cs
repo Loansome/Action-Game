@@ -127,7 +127,7 @@ namespace KinematicCharacterController
 					{
                         // set the movement and lock on to enemy
                         _attackMoveVelocity = Motor.CharacterForward * playerAnim.getRootCurve();
-                        _targetDirection = _lookInputVector; //_targetCurrentPosition - new Vector2(transform.position.x, transform.position.z);
+                        _targetDirection = _targetCurrentPosition - new Vector2(transform.position.x, transform.position.z);
                         break;
 					}
             }
@@ -264,7 +264,7 @@ namespace KinematicCharacterController
                 case CharacterState.Attack:
                     {
                         // Smoothly interpolate from current to target look direction (in this case, towards the target)
-                        Vector3 smoothedLookInputDirection = Vector3.Slerp(Motor.CharacterForward, _targetDirection, 1 - Mathf.Exp(-OrientationSharpness * deltaTime)).normalized;
+                        Vector3 smoothedLookInputDirection = Vector3.Slerp(Motor.CharacterForward, _lookInputVector /*_targetDirection*/, OrientationSharpness * deltaTime);
 
                         // Set the current rotation (which will be used by the KinematicCharacterMotor)
                         currentRotation = Quaternion.LookRotation(smoothedLookInputDirection, Motor.CharacterUp);
@@ -390,9 +390,21 @@ namespace KinematicCharacterController
                 case CharacterState.Attack:
 					{
                         // when attacking, attach velocities to keep it moving
-                        currentVelocity = Motor.CharacterForward * playerAnim.getRootCurve() * AttackMoveSpeed;
-                        currentVelocity += Gravity * deltaTime;
-                        currentVelocity *= (1f / (1f + (Drag * deltaTime)));
+                        if (Motor.GroundingStatus.IsStableOnGround)
+                        {
+                            currentVelocity = Motor.CharacterForward * playerAnim.getRootCurve() * MaxStableMoveSpeed;
+                        }
+                        else
+                        {
+                            // If we want to move, add an acceleration to the velocity
+                            Vector3 targetMovementVelocity = Motor.CharacterForward * playerAnim.getRootCurve() * MaxAirMoveSpeed;
+                            Vector3 velocityDiff = Vector3.ProjectOnPlane(targetMovementVelocity - currentVelocity, Gravity);
+                            currentVelocity += velocityDiff * AirAccelerationSpeed * deltaTime;
+
+                            //currentVelocity += Motor.CharacterForward * playerAnim.getRootCurve() * AttackMoveSpeed;
+                            currentVelocity += Gravity * deltaTime;
+                            currentVelocity *= (1f / (1f + (Drag * deltaTime)));
+                        }
                         break;
 					}
             }

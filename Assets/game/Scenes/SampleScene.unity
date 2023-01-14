@@ -3835,7 +3835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Motor: {fileID: 1405268067}
   MaxStableMoveSpeed: 10
-  StableMovementSharpness: 15
+  StableMovementSharpness: 150
   OrientationSharpness: 10
   MaxStableDistanceFromLedge: 5
   MaxStableDenivelationAngle: 180
