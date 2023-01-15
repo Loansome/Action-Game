@@ -6,7 +6,12 @@ public enum AnimationSet
 {
     Idle,
     Run,
-    GroundAttack1,
+    OverheadAttack, //overhead
+    SidewaysAttack, // sideways swing
+    GroundFarAttack,
+    OverheadFinisher,
+    SideFinisher,
+    Block,
     DodgeRoll,
 }
 
@@ -26,7 +31,12 @@ public class CharacterAnimation : MonoBehaviour
     #region Animations
     public static readonly int Idle = Animator.StringToHash("Idle");
     public static readonly int Run = Animator.StringToHash("Run");
-    public static readonly int Attack1 = Animator.StringToHash("GroundAttack1");
+    public static readonly int OverheadAttack = Animator.StringToHash("GroundAttack1");
+    public static readonly int SidewaysAttack = Animator.StringToHash("GroundAttack2");
+    public static readonly int GroundFarAttack = Animator.StringToHash("GroundFarAttack");
+    public static readonly int OverheadFinisher = Animator.StringToHash("GroundFinisher1");
+    public static readonly int SideFinisher = Animator.StringToHash("GroundFinisher2");
+    public static readonly int Block = Animator.StringToHash("Guard");
     public static readonly int Dodge = Animator.StringToHash("DodgeRoll");
 
     private int setAnimationFromEnum(AnimationSet animstate)
@@ -43,11 +53,36 @@ public class CharacterAnimation : MonoBehaviour
                     currentAnimation = AnimationSet.Run;
                     return Run;
 				}
-            case AnimationSet.GroundAttack1:
+            case AnimationSet.OverheadAttack:
 				{
-                    currentAnimation = AnimationSet.GroundAttack1;
-                    return Attack1;
-				}
+                    currentAnimation = AnimationSet.OverheadAttack;
+                    return OverheadAttack;
+                }
+            case AnimationSet.SidewaysAttack:
+                {
+                    currentAnimation = AnimationSet.SidewaysAttack;
+                    return SidewaysAttack;
+                }
+            case AnimationSet.GroundFarAttack:
+                {
+                    currentAnimation = AnimationSet.GroundFarAttack;
+                    return GroundFarAttack;
+                }
+            case AnimationSet.OverheadFinisher:
+                {
+                    currentAnimation = AnimationSet.OverheadFinisher;
+                    return OverheadFinisher;
+                }
+            case AnimationSet.SideFinisher:
+                {
+                    currentAnimation = AnimationSet.SideFinisher;
+                    return SideFinisher;
+                }
+            case AnimationSet.Block:
+                {
+                    currentAnimation = AnimationSet.Block;
+                    return Block;
+                }
             case AnimationSet.DodgeRoll:
                 {
                     currentAnimation = AnimationSet.DodgeRoll;

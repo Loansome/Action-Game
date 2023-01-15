@@ -263,11 +263,14 @@ namespace KinematicCharacterController
                     }
                 case CharacterState.Attack:
                     {
-                        // Smoothly interpolate from current to target look direction (in this case, towards the target)
-                        Vector3 smoothedLookInputDirection = Vector3.Slerp(Motor.CharacterForward, _lookInputVector /*_targetDirection*/, OrientationSharpness * deltaTime);
+                        if (_lookInputVector != Vector3.zero)
+                        {
+                            // Smoothly interpolate from current to target look direction (in this case, towards the target)
+                            Vector3 smoothedLookInputDirection = Vector3.Slerp(Motor.CharacterForward, _lookInputVector /*_targetDirection*/, OrientationSharpness * 5 * deltaTime);
 
-                        // Set the current rotation (which will be used by the KinematicCharacterMotor)
-                        currentRotation = Quaternion.LookRotation(smoothedLookInputDirection, Motor.CharacterUp);
+                            // Set the current rotation (which will be used by the KinematicCharacterMotor)
+                            currentRotation = Quaternion.LookRotation(smoothedLookInputDirection, Motor.CharacterUp);
+                        }
                         break;
                     }
             }

@@ -192,6 +192,7 @@ public class PlayerAttack : MonoBehaviour
         activateTimerToReset = true;
         currentComboTimer = currentAttack.duration;
         cancelComboTimer = currentAttack.cancelTime;
+        character.TransitionToState(CharacterState.Attack);
     }
 
 	#region StateMachine
@@ -225,7 +226,7 @@ public class PlayerAttack : MonoBehaviour
 
     private bool JabConditions()
 	{
-        if (equippedAbilities.IsEquipped("Attack") && (currentComboState == ComboState.JAB && cancelComboTimer < 0 || currentComboState == ComboState.NONE)) // don't punch if end of combo/kicking
+        if (equippedAbilities.IsEquipped("Attack Overhead") && (currentComboState == ComboState.JAB && cancelComboTimer < 0 || currentComboState == ComboState.NONE)) // don't punch if end of combo/kicking
             return true;
         else return false;
     }
@@ -242,7 +243,7 @@ public class PlayerAttack : MonoBehaviour
     private void Jab() {
         if (JabConditions()) // check if player attacks
         {
-            SetAttack("Attack");
+            SetAttack("Attack Overhead");
             playerAnimation.Attack();
             if (!character.IsGrounded())
             {

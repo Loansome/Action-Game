@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69dd68b88256ecc418776330da98889f, type: 3}
-  m_Name: Dodge Roll
+  m_Name: Attack Overhead
   m_EditorClassIdentifier: 
-  name: Dodge Roll
+  name: Attack Overhead
   description: 
   abilityPointCost: 0
   damage: 0
   damageArmor: 0
   damageRevenge: 0
-  damageAttribute: 4
+  damageAttribute: 0
   knockbackType: 0
   isCounterAttack: 0
-  isInvincible: 1
+  isInvincible: 0
   isGuardable: 0
   isKillable: 0
-  duration: 0.7
-  cancelTime: 0.7
+  duration: 0.9
+  cancelTime: 0.45
   isFinisher: 0
   isAOE: 0
   isRanged: 0
-  activationDistance: {x: 0, y: 0}
-  animation: 8
+  activationDistance: {x: 1, y: 2}
+  animation: 2

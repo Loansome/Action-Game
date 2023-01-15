@@ -89,7 +89,7 @@ public class InputManager : MonoBehaviour
         characterInputs.MoveAxisRight = moveAction.ReadValue<Vector2>().x;
         characterInputs.CameraRotation = Camera.main.transform.rotation;
         characterInputs.JumpDown = jumpAction.triggered;
-        characterInputs.Attack = selectAction.triggered;
+        //characterInputs.Attack = selectAction.triggered;
         //Debug.Log(characterInputs.JumpDown + " " + characterInputs.MoveAxisForward + " " + characterInputs.MoveAxisRight);
 
         // Apply inputs to character
