@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using KinematicCharacterController;
 
 public class AnimEventHandler : MonoBehaviour
 {
+    public MyCharacterController playerController;
+    private float _gravityDefault;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _gravityDefault = playerController.Gravity.y;
     }
 
     // Update is called once per frame
@@ -16,28 +20,32 @@ public class AnimEventHandler : MonoBehaviour
         
     }
 
-    public void StartCancelable()
+    public void Cancelable()
 	{
 
 	}
-    public void StartDamage()
+    public void DamageStart()
 	{
-        //Debug.Log("Can damage");
+        Debug.Log("Can damage");
 	}
-    public void EndDamage()
+    public void DamageEnd()
 	{
-        //Debug.Log("End damage");
+        Debug.Log("End damage");
     }
-    public void ChangeGravity(int newGravity)
+    public void GravitySet(int newGravity)
 	{
-
+        playerController.Gravity.y = newGravity;
 	}
-    public void StartInvincible()
+    public void GravityReset()
 	{
-        //Debug.Log("Now invincible");
+        playerController.Gravity.y = _gravityDefault;
 	}
-    public void EndInvincible()
+    public void InvincibleStart()
 	{
-
+        Debug.Log("Now invincible");
+	}
+    public void InvincibleEnd()
+	{
+        Debug.Log("Not invincible");
 	}
 }

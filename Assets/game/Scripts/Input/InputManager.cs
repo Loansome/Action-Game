@@ -71,7 +71,7 @@ public class InputManager : MonoBehaviour
         CharacterControllerUpdate();
 
 
-        CharaMoveUpdate();
+        //CharaMoveUpdate();
     }
 
     private void AnimationUpdate()
