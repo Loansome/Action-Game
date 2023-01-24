@@ -209,7 +209,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    public void SetAction(ComboState newState)
+    public void SetActionState(ComboState newState)
 	{
         TrySetState(newState);
 	}
@@ -243,11 +243,15 @@ public class PlayerAttack : MonoBehaviour
     private void Jab() {
         if (JabConditions()) // check if player attacks
         {
-            SetAttack("Attack Overhead");
             playerAnimation.Attack();
             if (!character.IsGrounded())
             {
+                SetAttack("Air Attack Down");
                 //charaMove.AirAttackJump(1f, false);
+            }
+            else
+            {
+                SetAttack("Attack Overhead");
             }
             Debug.Log("Jab");
             //TrySetState(ComboState.JAB);

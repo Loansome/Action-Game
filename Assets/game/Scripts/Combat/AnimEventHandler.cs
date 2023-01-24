@@ -5,13 +5,15 @@ using KinematicCharacterController;
 
 public class AnimEventHandler : MonoBehaviour
 {
-    public MyCharacterController playerController;
-    private float _gravityDefault;
+    [SerializeField] private MyCharacterController playerController;
+    private Vector3 _gravityPrevious;
+    private Vector3 _gravityDefault;
 
     // Start is called before the first frame update
     void Start()
     {
-        _gravityDefault = playerController.Gravity.y;
+        _gravityDefault = playerController.Gravity;
+        _gravityPrevious = playerController.Gravity;
     }
 
     // Update is called once per frame
@@ -22,7 +24,7 @@ public class AnimEventHandler : MonoBehaviour
 
     public void Cancelable()
 	{
-
+        Debug.Log("Cancel");
 	}
     public void DamageStart()
 	{
@@ -32,13 +34,14 @@ public class AnimEventHandler : MonoBehaviour
 	{
         Debug.Log("End damage");
     }
-    public void GravitySet(int newGravity)
+    public void GravityChange(float gravityModifier)
 	{
-        playerController.Gravity.y = newGravity;
+        _gravityPrevious = playerController.Gravity;
+        playerController.Gravity *= gravityModifier;
 	}
     public void GravityReset()
 	{
-        playerController.Gravity.y = _gravityDefault;
+        playerController.Gravity = _gravityPrevious; //_gravityDefault;
 	}
     public void InvincibleStart()
 	{

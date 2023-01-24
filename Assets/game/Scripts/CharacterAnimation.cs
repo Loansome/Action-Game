@@ -11,6 +11,10 @@ public enum AnimationSet
     GroundFarAttack,
     OverheadFinisher,
     SideFinisher,
+    DownAirAttack,
+    UpAirAttack,
+    DownAirFinish,
+    SideAirFinish,
     Block,
     DodgeRoll,
 }
@@ -36,6 +40,10 @@ public class CharacterAnimation : MonoBehaviour
     public static readonly int GroundFarAttack = Animator.StringToHash("GroundFarAttack");
     public static readonly int OverheadFinisher = Animator.StringToHash("GroundFinisher1");
     public static readonly int SideFinisher = Animator.StringToHash("GroundFinisher2");
+    public static readonly int DownAirAttack = Animator.StringToHash("AirAttack1");
+    public static readonly int UpAirAttack = Animator.StringToHash("AirAttack2");
+    public static readonly int DownAirFinish = Animator.StringToHash("AirFinisher1");
+    public static readonly int SideAirFinish = Animator.StringToHash("AirFinisher2");
     public static readonly int Block = Animator.StringToHash("Guard");
     public static readonly int Dodge = Animator.StringToHash("DodgeRoll");
 
@@ -77,6 +85,26 @@ public class CharacterAnimation : MonoBehaviour
                 {
                     currentAnimation = AnimationSet.SideFinisher;
                     return SideFinisher;
+                }
+            case AnimationSet.DownAirAttack:
+                {
+                    currentAnimation = AnimationSet.DownAirAttack;
+                    return DownAirAttack;
+                }
+            case AnimationSet.UpAirAttack:
+                {
+                    currentAnimation = AnimationSet.UpAirAttack;
+                    return UpAirAttack;
+                }
+            case AnimationSet.DownAirFinish:
+                {
+                    currentAnimation = AnimationSet.DownAirFinish;
+                    return DownAirFinish;
+                }
+            case AnimationSet.SideAirFinish:
+                {
+                    currentAnimation = AnimationSet.SideAirFinish;
+                    return SideAirFinish;
                 }
             case AnimationSet.Block:
                 {

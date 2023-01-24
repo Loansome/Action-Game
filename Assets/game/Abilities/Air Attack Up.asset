@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69dd68b88256ecc418776330da98889f, type: 3}
-  m_Name: Block
+  m_Name: Air Attack Up
   m_EditorClassIdentifier: 
   name: 
   description: 
@@ -30,4 +30,4 @@ MonoBehaviour:
   isAOE: 0
   isRanged: 0
   activationDistance: {x: 0, y: 0}
-  animation: 11
+  animation: 8

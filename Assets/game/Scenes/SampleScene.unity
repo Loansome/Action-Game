@@ -841,7 +841,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 650502617}
-  m_LocalRotation: {x: 0.13132699, y: 0.000000017057358, z: -0.0000000022596625, w: 0.99133915}
+  m_LocalRotation: {x: 0.13132699, y: -0.000000017057358, z: 0.0000000022596625, w: 0.99133915}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1440,7 +1440,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.14928971, y: 0.000000008518726, z: -0.0000000012825819, w: 0.9887935}
+  m_LocalRotation: {x: 0.14928971, y: -0.000000008518726, z: 0.0000000012825819, w: 0.9887935}
   m_LocalPosition: {x: 0.00034046968, y: 7.2397923, z: -14.999733}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3691,6 +3691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10caaedc5b8e3634591689a8f0ec5682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 1405268066}
 --- !u!1 &1405268058
 GameObject:
   m_ObjectHideFlags: 0
@@ -3709,6 +3710,8 @@ GameObject:
   - component: {fileID: 1405268066}
   - component: {fileID: 1405268072}
   - component: {fileID: 1405268062}
+  - component: {fileID: 1405268074}
+  - component: {fileID: 1405268073}
   - component: {fileID: 1405268064}
   - component: {fileID: 1405268068}
   m_Layer: 0
@@ -3801,6 +3804,10 @@ MonoBehaviour:
     abilityState: 3
   - abilityData: {fileID: 11400000, guid: cc4489888ee032a4480b950da2200994, type: 2}
     abilityState: 3
+  - abilityData: {fileID: 11400000, guid: b496d863feaeddc41b061710eb62bbae, type: 2}
+    abilityState: 3
+  - abilityData: {fileID: 11400000, guid: c2814b99e64cf2b49b4e72fdd4116020, type: 2}
+    abilityState: 3
 --- !u!114 &1405268065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3882,7 +3889,7 @@ MonoBehaviour:
   CapsuleYOffset: 0.4
   CapsulePhysicsMaterial: {fileID: 0}
   GroundDetectionExtraDistance: 0
-  MaxStableSlopeAngle: 60
+  MaxStableSlopeAngle: 85.8
   StableGroundLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -4017,6 +4024,34 @@ MonoBehaviour:
   _currentMagic: 0
   _maxDrive: 0
   _currentDrive: 0
+--- !u!114 &1405268073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405268058}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e36673175b0f8ac4bb2efd5ccdb0af6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1405268074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405268058}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e76a864ee642a0f47903ead92b9182b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jabLength: 2
+  finisherLength: 1
+  fullComboLength: 0
+  currentComboLength: 0
 --- !u!1001 &1441669854
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4159,7 +4194,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1573038696}
-  m_LocalRotation: {x: 0.14928971, y: 0.000000008506778, z: -0.0000000012843676, w: 0.9887935}
+  m_LocalRotation: {x: 0.14928971, y: -0.000000008506778, z: 0.0000000012843676, w: 0.9887935}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
