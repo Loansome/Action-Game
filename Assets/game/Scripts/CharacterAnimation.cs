@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using UnityEditor.Animations;
 
 public enum AnimationSet
 {
@@ -33,104 +35,105 @@ public class CharacterAnimation : MonoBehaviour
     }
 
     #region Animations
-    public static readonly int Idle = Animator.StringToHash("Idle");
-    public static readonly int Run = Animator.StringToHash("Run");
-    public static readonly int OverheadAttack = Animator.StringToHash("GroundAttack1");
-    public static readonly int SidewaysAttack = Animator.StringToHash("GroundAttack2");
-    public static readonly int GroundFarAttack = Animator.StringToHash("GroundFarAttack");
-    public static readonly int OverheadFinisher = Animator.StringToHash("GroundFinisher1");
-    public static readonly int SideFinisher = Animator.StringToHash("GroundFinisher2");
-    public static readonly int DownAirAttack = Animator.StringToHash("AirAttack1");
-    public static readonly int UpAirAttack = Animator.StringToHash("AirAttack2");
-    public static readonly int DownAirFinish = Animator.StringToHash("AirFinisher1");
-    public static readonly int SideAirFinish = Animator.StringToHash("AirFinisher2");
-    public static readonly int Block = Animator.StringToHash("Guard");
-    public static readonly int Dodge = Animator.StringToHash("DodgeRoll");
+    public static readonly string Idle = "Idle";
+    public static readonly string Run = ("Run");
+    public static readonly string OverheadAttack = ("GroundAttack1");
+    public static readonly string SidewaysAttack = ("GroundAttack2");
+    public static readonly string GroundFarAttack = ("GroundFarAttack");
+    public static readonly string OverheadFinisher = ("GroundFinisher1");
+    public static readonly string SideFinisher = ("GroundFinisher2");
+    public static readonly string DownAirAttack = ("AirAttack1");
+    public static readonly string UpAirAttack = ("AirAttack2");
+    public static readonly string DownAirFinish = ("AirFinisher1");
+    public static readonly string SideAirFinish = ("AirFinisher2");
+    public static readonly string Block = ("Guard");
+    public static readonly string Dodge = ("DodgeRoll");
 
-    private int setAnimationFromEnum(AnimationSet animstate)
+    private string SetAnimationFromEnum(AnimationSet animstate)
     {
         switch (animstate)
         {
             case AnimationSet.Idle:
                 {
-                    currentAnimation = AnimationSet.Idle;
+                    //currentAnimation = AnimationSet.Idle;
                     return Idle;
                 }
             case AnimationSet.Run:
                 {
-                    currentAnimation = AnimationSet.Run;
+                    //currentAnimation = AnimationSet.Run;
                     return Run;
 				}
             case AnimationSet.OverheadAttack:
 				{
-                    currentAnimation = AnimationSet.OverheadAttack;
+                    //currentAnimation = AnimationSet.OverheadAttack;
                     return OverheadAttack;
                 }
             case AnimationSet.SidewaysAttack:
                 {
-                    currentAnimation = AnimationSet.SidewaysAttack;
+                    //currentAnimation = AnimationSet.SidewaysAttack;
                     return SidewaysAttack;
                 }
             case AnimationSet.GroundFarAttack:
                 {
-                    currentAnimation = AnimationSet.GroundFarAttack;
+                    //currentAnimation = AnimationSet.GroundFarAttack;
                     return GroundFarAttack;
                 }
             case AnimationSet.OverheadFinisher:
                 {
-                    currentAnimation = AnimationSet.OverheadFinisher;
+                    //currentAnimation = AnimationSet.OverheadFinisher;
                     return OverheadFinisher;
                 }
             case AnimationSet.SideFinisher:
                 {
-                    currentAnimation = AnimationSet.SideFinisher;
+                    //currentAnimation = AnimationSet.SideFinisher;
                     return SideFinisher;
                 }
             case AnimationSet.DownAirAttack:
                 {
-                    currentAnimation = AnimationSet.DownAirAttack;
+                    //currentAnimation = AnimationSet.DownAirAttack;
                     return DownAirAttack;
                 }
             case AnimationSet.UpAirAttack:
                 {
-                    currentAnimation = AnimationSet.UpAirAttack;
+                    //currentAnimation = AnimationSet.UpAirAttack;
                     return UpAirAttack;
                 }
             case AnimationSet.DownAirFinish:
                 {
-                    currentAnimation = AnimationSet.DownAirFinish;
+                    //currentAnimation = AnimationSet.DownAirFinish;
                     return DownAirFinish;
                 }
             case AnimationSet.SideAirFinish:
                 {
-                    currentAnimation = AnimationSet.SideAirFinish;
+                    //currentAnimation = AnimationSet.SideAirFinish;
                     return SideAirFinish;
                 }
             case AnimationSet.Block:
                 {
-                    currentAnimation = AnimationSet.Block;
+                    //currentAnimation = AnimationSet.Block;
                     return Block;
                 }
             case AnimationSet.DodgeRoll:
                 {
-                    currentAnimation = AnimationSet.DodgeRoll;
+                    //currentAnimation = AnimationSet.DodgeRoll;
                     return Dodge;
                 }
         }
-        return 0;
+        return "";
     }
 
 
     private void Update()
 	{
-        if (isTriggeredThisFrame == false && (anim.GetCurrentAnimatorStateInfo(animLayer).shortNameHash == Idle || anim.GetCurrentAnimatorStateInfo(animLayer).shortNameHash == Run))
+        if (isTriggeredThisFrame == false && (anim.GetCurrentAnimatorClipInfo(animLayer)[0].clip.name == Idle || anim.GetCurrentAnimatorClipInfo(animLayer)[0].clip.name == Run))
             currentAnimation = AnimationSet.Idle;
         isTriggeredThisFrame = false;
-        //Debug.Log(currentAnimation);
+        //Debug.Log(anim.GetCurrentAnimatorClipInfo(animLayer)[0].clip.name);
 	}
     public void TriggerAnimation(AnimationSet animation)
 	{
-        anim.CrossFade(setAnimationFromEnum(animation), 0, animLayer);
+        anim.CrossFade(SetAnimationFromEnum(animation), 0, animLayer);
+        currentAnimation = animation;
         isTriggeredThisFrame = true;
 	}
 	#endregion
@@ -193,28 +196,51 @@ public class CharacterAnimation : MonoBehaviour
     }
 	#endregion
 
-    public AnimationSet getAnimationSet()
+    public AnimationSet GetAnimationSet()
 	{
         return currentAnimation;
 	}
 
-    public float getRootCurve()
+    public float GetRootCurve()
 	{
         return anim.GetFloat("RootForward");
 	}
 
-	public bool isPlaying(string stateName)
+	public bool IsPlaying(string stateName)
     {
-        if (getCurrentAnimation().name == stateName &&
+        if (GetCurrentAnimation().name == stateName &&
                 anim.GetCurrentAnimatorStateInfo(animLayer).normalizedTime < 1.0f)
             return true;
         else
             return false;
     }
 
-    public AnimationClip getCurrentAnimation()
+    public AnimationClip GetCurrentAnimation()
 	{
         return anim.GetCurrentAnimatorClipInfo(animLayer)[0].clip;
 	}
+    public AnimationClip FindAnimation(AnimationSet animation)
+	{
+        string findAnim = "Rig|" + SetAnimationFromEnum(animation);
+        //Debug.Log(findAnim);
 
+        // Get the controller that the Animator is using
+        AnimatorController animController = anim.runtimeAnimatorController as AnimatorController;
+
+        // Get the attack animation clip from the controller
+        foreach (AnimationClip clip in animController.animationClips)
+        {
+            //Debug.Log(clip.name + ",  " + findAnim);
+            if (clip.name == findAnim)
+            {
+                return clip;
+            }
+        }
+        return null;
+	}
+
+    public float GetCurrentAnimationTime()
+	{
+        return anim.GetCurrentAnimatorStateInfo(animLayer).normalizedTime;
+    }
 }

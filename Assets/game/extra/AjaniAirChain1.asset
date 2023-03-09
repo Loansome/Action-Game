@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af832213c1b393e4b8f36a13cba8e69b, type: 3}
+  m_Name: AjaniAirChain1
+  m_EditorClassIdentifier: 
+  animationState: AirChain1
+  hasAirVariantAnimation: 0
+  animationBlend: 0.05
+  length: 60
+  events:
+  - active: 1
+    start: 0
+    end: 0.07906975
+    script: FaceStick
+    operation: 0
+    parameters:
+    - 0.75
+    prefab: {fileID: 0}
+    airCondition: 0
+    holdButton: 0
+    scriptIndex: 0
+    label: 
+  - active: 1
+    start: 0
+    end: 0.09302321
+    script: FrontAndStickVelocity
+    operation: 0
+    parameters:
+    - 0.015
+    - 1
+    - 0.01
+    prefab: {fileID: 0}
+    airCondition: 0
+    holdButton: 0
+    scriptIndex: 0
+    label: 
+  - active: 1
+    start: 0
+    end: 0.33953488
+    script: SimpleJump
+    operation: 0
+    parameters:
+    - 0.05
+    - 0
+    prefab: {fileID: 0}
+    airCondition: 0
+    holdButton: 0
+    scriptIndex: 0
+    label: 
+  - active: 1
+    start: 0.14244185
+    end: 0.14244185
+    script: VFX
+    operation: 0
+    parameters:
+    - 0.05
+    - 0
+    - 0
+    - 0.5
+    - 0
+    - 0
+    - -45
+    - 1.1
+    - 1.1
+    - 1.1
+    - 1.7
+    - 0.5
+    prefab: {fileID: 2370029061339269102, guid: 8690958b85f519340a4c32b1b32c2d59, type: 3}
+    airCondition: 0
+    holdButton: 0
+    scriptIndex: 0
+    label: 
+  transitions:
+  - active: 1
+    pressButton:
+      active: 1
+      buttonIndex: 2
+    holdButton:
+      active: 0
+      buttonIndex: 0
+    state: {fileID: 11400000, guid: 4453baceebea3b94daffa0189305c74e, type: 2}
+    ignoreHitstun: 0
+    ignoreCancel: 0
+    earlyCancelWindow: 0
+    useJumps: 0
+    cantLoop: 0
+    airState: 2
+    priority: 1
+  typicalStart: 1
+  attacks:
+  - active: 1
+    startFrame: 0.17209303
+    endFrame: 0.19069763
+    cancelWindowStart: 0.24534884
+    hitPause: 3
+    hitStun: 30
+    damage: 1
+    attackLevel: 0
+    hitDirection: 0
+    hitPower: 0
+    knockBack: {x: 0, y: 0}
+    ignoreChainKnockback: 0
+    knockbackType: 0
+    impactType: 0
+    impactPow: 1
+    hitboxType: 0
+    hitBoxScale: {x: 20, y: 1.5, z: 3}
+    hitBoxPos: {x: 0.5, y: 0.5, z: 1}
+    hitBoxRot: {x: 0, y: 0, z: 0}
+    guardBreak: 0
+  stateType: 0
+  aim: 0
+  tpCost: 0
+  dps: 1
+  breakCancel: 0
+  hitstunCancel: 0
+  bypassHitstunGuard: 0
+  cantLoop: 0
+  useJumps: 0
+  groundCancel: 1

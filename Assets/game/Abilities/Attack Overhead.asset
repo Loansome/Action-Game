@@ -24,10 +24,22 @@ MonoBehaviour:
   isInvincible: 0
   isGuardable: 0
   isKillable: 0
-  duration: 0.9
-  cancelTime: 0.45
+  cancelTime: 0.581
   isFinisher: 0
   isAOE: 0
   isRanged: 0
   activationDistance: {x: 1, y: 2}
   animation: 2
+  attackEvents: []
+  forwardMove:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  upwardMove:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

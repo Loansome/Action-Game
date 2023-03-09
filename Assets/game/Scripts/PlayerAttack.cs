@@ -18,14 +18,15 @@ public class PlayerAttack : MonoBehaviour
 
     private CharacterAnimation playerAnimation;
 
-    private bool activateTimerToReset;
+    private bool inAttack;
     private float defaultComboTimer = 0.7f;
+    private float attackDuration;
     private float currentComboTimer;
     private float cancelComboTimer;
     public ComboState currentComboState;
 
     public CharacterMovement charaMove;
-    public MyCharacterController character;
+    public MyCharacterController characterController;
 
     public Transform attackPoint;
     public Vector3 attackRange;
@@ -48,7 +49,7 @@ public class PlayerAttack : MonoBehaviour
     {
         playerAnimation = GetComponentInChildren<CharacterAnimation>();
         charaMove = GetComponent<CharacterMovement>();
-        character = GetComponent<MyCharacterController>();
+        characterController = GetComponent<MyCharacterController>();
     }
 
     private void Start()
@@ -121,9 +122,10 @@ public class PlayerAttack : MonoBehaviour
 
             currentComboState = ComboState.DODGE;
             currentAttack = equippedAbilities.GetAttackData("Dodge");
-            activateTimerToReset = true;
-            currentComboTimer = currentAttack.duration;
-            cancelComboTimer = currentAttack.cancelTime;
+            inAttack = true;
+            attackDuration = playerAnimation.FindAnimation(currentAttack.animation).length;
+            currentComboTimer = 0;
+            cancelComboTimer = currentAttack.cancelTime * attackDuration;
 
             playerAnimation.Guard();
             Debug.Log("Dodge");
@@ -135,7 +137,7 @@ public class PlayerAttack : MonoBehaviour
                 return;
 
             currentComboState++;
-            activateTimerToReset = true;
+            inAttack = true;
             currentComboTimer = defaultComboTimer + .1f;
 
             currentComboState = ComboState.MAGIC;
@@ -151,7 +153,7 @@ public class PlayerAttack : MonoBehaviour
                 currentComboState++;
             else currentComboState = ComboState.FINISH;
 
-            activateTimerToReset = true;
+            inAttack = true;
             currentComboTimer = defaultComboTimer;
 
             Debug.Log("Finish");
@@ -173,7 +175,7 @@ public class PlayerAttack : MonoBehaviour
 
             currentComboState = ComboState.KISS;
 
-            activateTimerToReset = true;
+            inAttack = true;
             currentComboTimer = defaultComboTimer + .2f;
 
             //playerAnimation.Kiss();
@@ -189,10 +191,12 @@ public class PlayerAttack : MonoBehaviour
 	{
         currentAttack = equippedAbilities.GetAttackData(attackName);
         playerAnimation.TriggerAnimation(currentAttack.animation);
-        activateTimerToReset = true;
-        currentComboTimer = currentAttack.duration;
-        cancelComboTimer = currentAttack.cancelTime;
-        character.TransitionToState(CharacterState.Attack);
+        inAttack = true;
+        attackDuration = playerAnimation.FindAnimation(currentAttack.animation).length;
+        //Debug.Log(playerAnimation.FindAnimation(currentAttack.animation));
+        //currentComboTimer = 0;
+        cancelComboTimer = Mathf.Clamp(currentAttack.cancelTime, 0, attackDuration);
+        characterController.TransitionToState(CharacterState.Attack);
     }
 
 	#region StateMachine
@@ -226,13 +230,13 @@ public class PlayerAttack : MonoBehaviour
 
     private bool JabConditions()
 	{
-        if (equippedAbilities.IsEquipped("Attack Overhead") && (currentComboState == ComboState.JAB && cancelComboTimer < 0 || currentComboState == ComboState.NONE)) // don't punch if end of combo/kicking
+        if (equippedAbilities.IsEquipped("Attack Overhead") && (currentComboState == ComboState.JAB && cancelComboTimer >= attackDuration || currentComboState == ComboState.NONE)) // don't punch if end of combo/kicking
             return true;
         else return false;
     }
     private bool DodgeConditions()
 	{
-        if (equippedAbilities.IsEquipped("Dodge Roll") && (currentComboState == ComboState.NONE && character.IsGrounded()))
+        if (equippedAbilities.IsEquipped("Dodge Roll") && (currentComboState == ComboState.NONE && characterController.IsGrounded()))
             return true;
         else return false;
 
@@ -244,7 +248,7 @@ public class PlayerAttack : MonoBehaviour
         if (JabConditions()) // check if player attacks
         {
             playerAnimation.Attack();
-            if (!character.IsGrounded())
+            if (!characterController.IsGrounded())
             {
                 SetAttack("Air Attack Down");
                 //charaMove.AirAttackJump(1f, false);
@@ -254,7 +258,7 @@ public class PlayerAttack : MonoBehaviour
                 SetAttack("Attack Overhead");
             }
             Debug.Log("Jab");
-            //TrySetState(ComboState.JAB);
+            TrySetState(ComboState.JAB);
             return;
         }
     }
@@ -267,7 +271,7 @@ public class PlayerAttack : MonoBehaviour
             SetAttack("Dodge Roll");
             playerAnimation.Guard();
             Debug.Log("Dodge");
-            //TrySetState(ComboState.DODGE);
+            TrySetState(ComboState.DODGE);
         }
     }
     private void Magic() { }
@@ -276,15 +280,16 @@ public class PlayerAttack : MonoBehaviour
 
 	void ResetComboState() // counts down combo timer, resets combo when time is up
     {
-        if (activateTimerToReset)
+        if (inAttack)
         {
-            currentComboTimer -= Time.deltaTime;
-            cancelComboTimer -= Time.deltaTime;
+            Debug.Log(cancelComboTimer + ", " + attackDuration);
+            currentComboTimer = playerAnimation.GetCurrentAnimationTime();
             charaMove.canMove = false;
-            if (currentComboTimer <= 0f)
+            if (currentComboTimer >= attackDuration)
             {
                 currentComboState = ComboState.NONE;
-                activateTimerToReset = false;
+                inAttack = false;
+                characterController.TransitionToState(CharacterState.Default);
                 charaMove.canMove = true;
                 Debug.Log("RESET");
             }

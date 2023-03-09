@@ -126,7 +126,7 @@ namespace KinematicCharacterController
                 case CharacterState.Attack:
 					{
                         // set the movement and lock on to enemy
-                        _attackMoveVelocity = Motor.CharacterForward * playerAnim.getRootCurve();
+                        _attackMoveVelocity = Motor.CharacterForward * playerAnim.GetRootCurve();
                         _targetDirection = _targetCurrentPosition - new Vector2(transform.position.x, transform.position.z);
                         break;
 					}
@@ -225,11 +225,11 @@ namespace KinematicCharacterController
                             _currentAnimation = playerAnim.getCurrentAnimation();
                             Debug.Log(_currentAnimation.name);
                         }*/
-                        if (playerAnim.getAnimationSet() != AnimationSet.Idle && _currentSet != playerAnim.getAnimationSet())
+                        /*if (playerAnim.GetAnimationSet() != AnimationSet.Idle && _currentSet != playerAnim.GetAnimationSet())
 						{
-                            _currentSet = playerAnim.getAnimationSet();
+                            _currentSet = playerAnim.GetAnimationSet();
                             Debug.Log("Controller: " + _currentSet);
-                        }
+                        }*/
                         break;
                     }
             }
@@ -395,12 +395,12 @@ namespace KinematicCharacterController
                         // when attacking, attach velocities to keep it moving
                         if (Motor.GroundingStatus.IsStableOnGround)
                         {
-                            currentVelocity = Motor.CharacterForward * playerAnim.getRootCurve() * MaxStableMoveSpeed;
+                            currentVelocity = Motor.CharacterForward * playerAnim.GetRootCurve() * MaxStableMoveSpeed;
                         }
                         else
                         {
                             // If we want to move, add an acceleration to the velocity
-                            Vector3 targetMovementVelocity = Motor.CharacterForward * playerAnim.getRootCurve() * MaxAirMoveSpeed;
+                            Vector3 targetMovementVelocity = Motor.CharacterForward * playerAnim.GetRootCurve() * MaxAirMoveSpeed;
                             Vector3 velocityDiff = Vector3.ProjectOnPlane(targetMovementVelocity - currentVelocity, Gravity);
                             currentVelocity += velocityDiff * AirAccelerationSpeed * deltaTime;
 
@@ -485,10 +485,10 @@ namespace KinematicCharacterController
                             TransitionToState(CharacterState.Default);
                             Debug.Log("Now set to default state");
 						}*/
-                        if (playerAnim.getAnimationSet() == AnimationSet.Idle)
+                        /*if (playerAnim.GetAnimationSet() == AnimationSet.Idle)
 						{
                             TransitionToState(CharacterState.Default);
-						}
+						}*/
                         break;
 					}
             }

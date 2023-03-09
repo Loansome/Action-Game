@@ -18,8 +18,8 @@ public class AttackData : AbilityData
     public bool isKillable;
 
 
-    public float duration;
-    public float cancelTime;
+    //[Range(0f, 1f)]public float duration;
+    [Range(0f, 1f)] public float cancelTime;
     public bool isFinisher;
     public bool isAOE;
     public bool isRanged;
@@ -27,4 +27,8 @@ public class AttackData : AbilityData
 
     public AnimationSet animation;
 
+    public List<AttackEvents> attackEvents;
+
+    public AnimationCurve forwardMove;
+    public AnimationCurve upwardMove;
 }
