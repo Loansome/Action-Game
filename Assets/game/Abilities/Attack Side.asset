@@ -12,22 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69dd68b88256ecc418776330da98889f, type: 3}
   m_Name: Attack Side
   m_EditorClassIdentifier: 
-  name: 
+  name: Attack Side
   description: 
   abilityPointCost: 0
+  duration: 0.8
+  cancelTime: 0.648
+  isInvincible: 0
+  isGuardable: 0
+  animation: 3
+  attackEvents: []
+  forwardMove:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  upwardMove:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   damage: 0
   damageArmor: 0
   damageRevenge: 0
   damageAttribute: 0
   knockbackType: 0
   isCounterAttack: 0
-  isInvincible: 0
-  isGuardable: 0
   isKillable: 0
-  duration: 0
-  cancelTime: 0
   isFinisher: 0
   isAOE: 0
   isRanged: 0
   activationDistance: {x: 0, y: 0}
-  animation: 3

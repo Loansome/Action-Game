@@ -15,20 +15,10 @@ MonoBehaviour:
   name: Attack Overhead
   description: 
   abilityPointCost: 0
-  damage: 0
-  damageArmor: 0
-  damageRevenge: 0
-  damageAttribute: 0
-  knockbackType: 0
-  isCounterAttack: 0
+  duration: 0.838
+  cancelTime: 0.538
   isInvincible: 0
   isGuardable: 0
-  isKillable: 0
-  cancelTime: 0.581
-  isFinisher: 0
-  isAOE: 0
-  isRanged: 0
-  activationDistance: {x: 1, y: 2}
   animation: 2
   attackEvents: []
   forwardMove:
@@ -43,3 +33,14 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  damage: 0
+  damageArmor: 0
+  damageRevenge: 0
+  damageAttribute: 0
+  knockbackType: 0
+  isCounterAttack: 0
+  isKillable: 0
+  isFinisher: 0
+  isAOE: 0
+  isRanged: 0
+  activationDistance: {x: 1, y: 2}

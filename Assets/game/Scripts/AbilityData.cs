@@ -4,9 +4,10 @@ using System.IO;
 using UnityEngine;
 using UnityEditor;
 
-[CreateAssetMenu(fileName = "New Ability", menuName = "Ability")]
+[CreateAssetMenu(fileName = "New Ability", menuName = "New Ability")]
 public class AbilityData : ScriptableObject
 {
+	[Header("Ability Info")]
     public new string name;
     public string description;
     public int abilityPointCost;

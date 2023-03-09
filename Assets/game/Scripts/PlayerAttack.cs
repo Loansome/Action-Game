@@ -27,6 +27,8 @@ public class PlayerAttack : MonoBehaviour
 
     public CharacterMovement charaMove;
     public MyCharacterController characterController;
+    public ComboChainHandler comboChain;
+    public AttackContextHandler contextHandler;
 
     public Transform attackPoint;
     public Vector3 attackRange;
@@ -35,11 +37,7 @@ public class PlayerAttack : MonoBehaviour
     [Header("Actions")]
     public AbilityHolder equippedAbilities;
     public AttackData currentAttack;
-
-    public int jabLength = 2;
-    public int finisherLength = 1;
-    public int comboLength;
-    public int currentComboLength;
+    public AnimationData currentAnimation;
 
     private bool inputAttack;
     private bool inputDodge;
@@ -50,6 +48,8 @@ public class PlayerAttack : MonoBehaviour
         playerAnimation = GetComponentInChildren<CharacterAnimation>();
         charaMove = GetComponent<CharacterMovement>();
         characterController = GetComponent<MyCharacterController>();
+        comboChain = GetComponent<ComboChainHandler>();
+        contextHandler = GetComponent<AttackContextHandler>();
     }
 
     private void Start()
@@ -84,6 +84,21 @@ public class PlayerAttack : MonoBehaviour
         ResetComboState();
     }
 
+    public void SetActionState(ComboState newState)
+	{
+        TrySetState(newState);
+	}
+
+    private bool TrySetState(ComboState newState)
+	{
+        if (newState == currentComboState) return false;
+        else
+        {
+            currentComboState = newState;
+            return true;
+        }
+	}
+
     public void SetInputs(bool attack, bool dodge, bool magic)
 	{
         inputAttack = attack;
@@ -91,111 +106,27 @@ public class PlayerAttack : MonoBehaviour
         inputMagic = magic;
 	}
 
-    void AttackCombo()
-    {
-        if (inputAttack) // punch
-        {
-            if (currentComboState == ComboState.JAB && cancelComboTimer > 0 || currentComboState == ComboState.DODGE || currentComboState == ComboState.MAGIC) // don't punch if end of combo/kicking
-                return;
-
-            currentComboState = ComboState.JAB;
-            SetAttack("Attack");
-
-            playerAnimation.Attack();
-            if (!charaMove.isGrounded)
-            {  
-                charaMove.AirAttackJump(1f, false);
-            }
-            Debug.Log("Jab");
-
-            /*Collider[] hitEnemies = Physics.OverlapBox(attackPoint.position, attackRange, Quaternion.Euler(0,0,0), enemyLayers);
-            foreach (Collider enemy in hitEnemies)
-            {
-                enemy.GetComponent<EnemyMovement>().TakeDamage(1);
-            }*/
-        }
-
-        if (inputDodge && charaMove.isGrounded)
-        {
-            if (currentComboState != ComboState.NONE)
-                return;
-
-            currentComboState = ComboState.DODGE;
-            currentAttack = equippedAbilities.GetAttackData("Dodge");
-            inAttack = true;
-            attackDuration = playerAnimation.FindAnimation(currentAttack.animation).length;
-            currentComboTimer = 0;
-            cancelComboTimer = currentAttack.cancelTime * attackDuration;
-
-            playerAnimation.Guard();
-            Debug.Log("Dodge");
-        }
-
-        if (inputMagic)
-        {
-            if (currentComboState != ComboState.NONE)
-                return;
-
-            currentComboState++;
-            inAttack = true;
-            currentComboTimer = defaultComboTimer + .1f;
-
-            currentComboState = ComboState.MAGIC;
-            playerAnimation.Magic();
-        }
-
-        if (Input.GetKeyDown(KeyCode.K)) // kick
-        {
-            if (currentComboState == ComboState.FINISH || currentComboState == ComboState.KISS || currentComboTimer > 0.35f) // don't kick if ended combo
-                return;
-
-            if (currentComboState == ComboState.FINISH)
-                currentComboState++;
-            else currentComboState = ComboState.FINISH;
-
-            inAttack = true;
-            currentComboTimer = defaultComboTimer;
-
-            Debug.Log("Finish");
-
-            //if (currentComboState == ComboState.KICK)
-                //playerAnimation.Kick();
-
-            /*Collider[] hitEnemies = Physics.OverlapBox(attackPoint.position, attackRange, Quaternion.Euler(0, 0, 0), enemyLayers);
-            foreach (Collider enemy in hitEnemies)
-            {
-                enemy.GetComponent<EnemyMovement>().TakeDamage(1);
-            }*/
-        }
-
-        if (Input.GetKeyDown(KeyCode.L)) // kiss
-        {
-            if (currentComboState == ComboState.KISS || currentComboTimer > 0.35f) // don't kiss if ended combo
-                return;
-
-            currentComboState = ComboState.KISS;
-
-            inAttack = true;
-            currentComboTimer = defaultComboTimer + .2f;
-
-            //playerAnimation.Kiss();
-
-            /*Collider[] hitEnemies = Physics.OverlapBox(attackPoint.position, attackRange, Quaternion.Euler(0, 0, 0), enemyLayers);
-            foreach (Collider enemy in hitEnemies)
-            {
-                enemy.GetComponent<EnemyMovement>().Kissed();
-            }*/
-        }
-    }
     private void SetAttack(string attackName)
 	{
-        currentAttack = equippedAbilities.GetAttackData(attackName);
+        currentAttack = equippedAbilities.FindAttack(attackName);
         playerAnimation.TriggerAnimation(currentAttack.animation);
         inAttack = true;
-        attackDuration = playerAnimation.FindAnimation(currentAttack.animation).length;
+        attackDuration = currentAttack.duration;
         //Debug.Log(playerAnimation.FindAnimation(currentAttack.animation));
         //currentComboTimer = 0;
-        cancelComboTimer = Mathf.Clamp(currentAttack.cancelTime, 0, attackDuration);
+        cancelComboTimer = currentAttack.cancelTime;
+        characterController.TransitionToState(CharacterState.Attack);
+    }
+
+    private void SetAnimation(string animationName)
+    {
+        currentAnimation = equippedAbilities.FindAnimation(animationName);
+        playerAnimation.TriggerAnimation(currentAnimation.animation);
+        inAttack = true;
+        attackDuration = currentAnimation.duration;
+        //attackDuration = playerAnimation.FindAnimation(currentAnimation.animation).length;
+        //Debug.Log(playerAnimation.FindAnimation(currentAttack.animation));
+        cancelComboTimer = currentAnimation.cancelTime;
         characterController.TransitionToState(CharacterState.Attack);
     }
 
@@ -213,24 +144,16 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    public void SetActionState(ComboState newState)
-	{
-        TrySetState(newState);
-	}
-
-    private bool TrySetState(ComboState newState)
-	{
-        if (newState == currentComboState) return false;
-        else
-        {
-            currentComboState = newState;
-            return true;
-        }
-	}
-
     private bool JabConditions()
 	{
-        if (equippedAbilities.IsEquipped("Attack Overhead") && (currentComboState == ComboState.JAB && cancelComboTimer >= attackDuration || currentComboState == ComboState.NONE)) // don't punch if end of combo/kicking
+        if (comboChain.TryCurrentAttack("Attack Overhead") && (currentComboState == ComboState.JAB && cancelComboTimer <= currentComboTimer || currentComboState == ComboState.NONE)) // don't punch if end of combo/kicking
+            return true;
+        else return false;
+    }
+    private bool JabConditions2()
+    {
+        //Debug.Log("Checking jab 2. Cancel = " + (cancelComboTimer <= currentComboTimer) + " Combo chain? " + comboChain.TryCurrentAttack("Attack Side"));
+        if (comboChain.TryCurrentAttack("Attack Side") && (currentComboState == ComboState.JAB && cancelComboTimer <= currentComboTimer))
             return true;
         else return false;
     }
@@ -251,16 +174,33 @@ public class PlayerAttack : MonoBehaviour
             if (!characterController.IsGrounded())
             {
                 SetAttack("Air Attack Down");
+                comboChain.SetCurrentAttack("Air Attack Down");
                 //charaMove.AirAttackJump(1f, false);
             }
             else
             {
                 SetAttack("Attack Overhead");
+                comboChain.SetCurrentAttack("Attack Overhead");
             }
             Debug.Log("Jab");
             TrySetState(ComboState.JAB);
+
+            /*Collider[] hitEnemies = Physics.OverlapBox(attackPoint.position, attackRange, Quaternion.Euler(0,0,0), enemyLayers);
+            foreach (Collider enemy in hitEnemies)
+            {
+                enemy.GetComponent<EnemyMovement>().TakeDamage(1);
+            }*/
             return;
         }
+        else if (JabConditions2())
+		{
+            playerAnimation.Attack();
+            SetAttack("Attack Side");
+            comboChain.SetCurrentAttack("Attack Side");
+            Debug.Log("Jab 2");
+            TrySetState(ComboState.JAB);
+            return;
+		}
     }
 
     private void Finish() { }
@@ -268,13 +208,26 @@ public class PlayerAttack : MonoBehaviour
     private void Dodge() {
         if (DodgeConditions()) // check if player dodges
         {
-            SetAttack("Dodge Roll");
+            SetAnimation("Dodge Roll");
             playerAnimation.Guard();
             Debug.Log("Dodge");
             TrySetState(ComboState.DODGE);
         }
     }
-    private void Magic() { }
+    private void Magic() {
+        if (inputMagic)
+        {
+            if (currentComboState != ComboState.NONE)
+                return;
+
+            currentComboState++;
+            inAttack = true;
+            currentComboTimer = defaultComboTimer + .1f;
+
+            currentComboState = ComboState.MAGIC;
+            playerAnimation.Magic();
+        }
+    }
 
 	#endregion
 
@@ -282,7 +235,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (inAttack)
         {
-            Debug.Log(cancelComboTimer + ", " + attackDuration);
+            //Debug.Log(cancelComboTimer + ", " + attackDuration);
             currentComboTimer = playerAnimation.GetCurrentAnimationTime();
             charaMove.canMove = false;
             if (currentComboTimer >= attackDuration)
@@ -291,6 +244,7 @@ public class PlayerAttack : MonoBehaviour
                 inAttack = false;
                 characterController.TransitionToState(CharacterState.Default);
                 charaMove.canMove = true;
+                comboChain.ResetComboState();
                 Debug.Log("RESET");
             }
         }

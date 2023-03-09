@@ -30,12 +30,31 @@ public class AbilityHolder : MonoBehaviour
 		return abilityState == AbilityState.Equipped || abilityState == AbilityState.LockEquipped;
 	}
 
+	public int CheckAmountEquipped(string name)
+	{
+		int amountEquipped = 0;
+		foreach (Ability ability in abilities)
+		{
+			if (ability.abilityData.name == name && (ability.abilityState == AbilityState.Equipped || ability.abilityState == AbilityState.LockEquipped))
+			{
+				amountEquipped++;
+			}
+		}
+
+		return amountEquipped;
+	}
+
 	public Ability FindAbility(string name)
 	{
 		return abilities.Find(t => t.abilityData.name == name);
 	}
 
-	public AttackData GetAttackData(string name)
+	public AnimationData FindAnimation(string name)
+	{
+		return (AnimationData)FindAbility(name).abilityData;
+	}
+
+	public AttackData FindAttack(string name)
 	{
 		return (AttackData)FindAbility(name).abilityData;
 	}

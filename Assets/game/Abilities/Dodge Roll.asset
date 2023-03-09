@@ -9,25 +9,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69dd68b88256ecc418776330da98889f, type: 3}
+  m_Script: {fileID: 11500000, guid: b5775a1e36f05d94c96a8c29b3a29635, type: 3}
   m_Name: Dodge Roll
   m_EditorClassIdentifier: 
   name: Dodge Roll
   description: 
   abilityPointCost: 0
-  damage: 0
-  damageArmor: 0
-  damageRevenge: 0
-  damageAttribute: 4
-  knockbackType: 0
-  isCounterAttack: 0
+  duration: 0.653
+  cancelTime: 0.7
   isInvincible: 1
   isGuardable: 0
-  isKillable: 0
-  duration: 0.7
-  cancelTime: 0.7
-  isFinisher: 0
-  isAOE: 0
-  isRanged: 0
-  activationDistance: {x: 0, y: 0}
   animation: 12
+  attackEvents: []
+  forwardMove:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  upwardMove:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
