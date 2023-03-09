@@ -12,22 +12,122 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69dd68b88256ecc418776330da98889f, type: 3}
   m_Name: Finish Overhead
   m_EditorClassIdentifier: 
-  name: 
+  name: Finish Overhead
   description: 
   abilityPointCost: 0
+  isAerial: 0
+  duration: 0.86
+  cancelTime: 0.64
+  gravityMod: 1
+  startGravity: 0
+  endGravity: 0
+  isInvincible: 0
+  isGuardable: 0
+  animation: 5
+  forwardMove:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: -16.62446
+      outSlope: -16.62446
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.17646624
+    - serializedVersion: 3
+      time: 0.03466652
+      value: -0.37023324
+      inSlope: 0.010166852
+      outSlope: 0.010166852
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.071731724
+      value: 0
+      inSlope: 10.990692
+      outSlope: 10.990692
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.058846746
+      outWeight: 0.14121856
+    - serializedVersion: 3
+      time: 0.27174842
+      value: 1.0736127
+      inSlope: -0.01280815
+      outSlope: -0.01280815
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.8648577
+    - serializedVersion: 3
+      time: 0.3332817
+      value: 0.7492758
+      inSlope: 18.977896
+      outSlope: 18.977896
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20487244
+      outWeight: 0.020223405
+    - serializedVersion: 3
+      time: 0.45910475
+      value: 1.4902546
+      inSlope: 0.001824934
+      outSlope: 0.001824934
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5021097
+      value: 0.0046081543
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.56962025
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 3
+    m_PostInfinity: 3
+    m_RotationOrder: 4
+  upwardMove:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   damage: 0
   damageArmor: 0
   damageRevenge: 0
   damageAttribute: 0
   knockbackType: 0
   isCounterAttack: 0
-  isInvincible: 0
-  isGuardable: 0
   isKillable: 0
-  duration: 0
-  cancelTime: 0
   isFinisher: 1
   isAOE: 0
   isRanged: 0
   activationDistance: {x: 0, y: 0}
-  animation: 5
+  Transitions:
+  - Attack: {fileID: 11400000, guid: 0f00fa7a50376a449960dab7a2b7e533, type: 2}
+    Priority: 0

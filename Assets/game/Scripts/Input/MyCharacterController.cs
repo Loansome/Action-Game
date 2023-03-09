@@ -57,6 +57,7 @@ namespace KinematicCharacterController
         public List<Collider> IgnoredColliders = new List<Collider>();
         public bool OrientTowardsGravity = false;
         public Vector3 Gravity = new Vector3(0, -30f, 0);
+        public float GravityMod = 1;
         public Transform MeshRoot;
 
         public CharacterState CurrentCharacterState { get; private set; }
@@ -401,11 +402,11 @@ namespace KinematicCharacterController
                         {
                             // If we want to move, add an acceleration to the velocity
                             Vector3 targetMovementVelocity = Motor.CharacterForward * playerAnim.GetRootCurve() * MaxAirMoveSpeed;
-                            Vector3 velocityDiff = Vector3.ProjectOnPlane(targetMovementVelocity - currentVelocity, Gravity);
+                            Vector3 velocityDiff = Vector3.ProjectOnPlane(targetMovementVelocity - currentVelocity, Gravity * GravityMod);
                             currentVelocity += velocityDiff * AirAccelerationSpeed * deltaTime;
 
                             //currentVelocity += Motor.CharacterForward * playerAnim.getRootCurve() * AttackMoveSpeed;
-                            currentVelocity += Gravity * deltaTime;
+                            currentVelocity += Gravity * GravityMod * deltaTime;
                             currentVelocity *= (1f / (1f + (Drag * deltaTime)));
                         }
                         break;

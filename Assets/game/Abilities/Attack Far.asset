@@ -12,22 +12,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69dd68b88256ecc418776330da98889f, type: 3}
   m_Name: Attack Far
   m_EditorClassIdentifier: 
-  name: 
+  name: Attack Far
   description: 
   abilityPointCost: 0
+  isAerial: 0
+  duration: 0.924
+  cancelTime: 0.475
+  gravityMod: 1
+  startGravity: 0
+  endGravity: 0
+  isInvincible: 0
+  isGuardable: 0
+  animation: 4
+  forwardMove:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  upwardMove:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   damage: 0
   damageArmor: 0
   damageRevenge: 0
   damageAttribute: 0
   knockbackType: 0
   isCounterAttack: 0
-  isInvincible: 0
-  isGuardable: 0
   isKillable: 0
-  duration: 0
-  cancelTime: 0
   isFinisher: 0
   isAOE: 0
   isRanged: 1
   activationDistance: {x: 4, y: 6}
-  animation: 4
+  Transitions:
+  - Attack: {fileID: 11400000, guid: a9d491798d8c2374d809ab665d398447, type: 2}
+    Priority: 0
+  - Attack: {fileID: 11400000, guid: e47d156dcd4c4fe48899be7d85cc3a27, type: 2}
+    Priority: 0
+  - Attack: {fileID: 11400000, guid: 2ae1782ce903a0c42b8675be3f060c53, type: 2}
+    Priority: 0
+  - Attack: {fileID: 11400000, guid: 0f00fa7a50376a449960dab7a2b7e533, type: 2}
+    Priority: 0

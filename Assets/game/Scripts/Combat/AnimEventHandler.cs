@@ -6,14 +6,13 @@ using KinematicCharacterController;
 public class AnimEventHandler : MonoBehaviour
 {
     [SerializeField] private MyCharacterController playerController;
-    private Vector3 _gravityPrevious;
-    private Vector3 _gravityDefault;
+    private float _gravityPrevious;
+    private float _gravityDefault = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        _gravityDefault = playerController.Gravity;
-        _gravityPrevious = playerController.Gravity;
+        _gravityPrevious = playerController.GravityMod;
     }
 
     // Update is called once per frame
@@ -36,12 +35,14 @@ public class AnimEventHandler : MonoBehaviour
     }
     public void GravityChange(float gravityModifier)
 	{
-        _gravityPrevious = playerController.Gravity;
-        playerController.Gravity *= gravityModifier;
+        _gravityPrevious = playerController.GravityMod;
+        playerController.GravityMod = gravityModifier;
+        Debug.Log("Set new gravity");
 	}
     public void GravityReset()
 	{
-        playerController.Gravity = _gravityPrevious; //_gravityDefault;
+        playerController.GravityMod = _gravityDefault; //_gravityPrevious; //_gravityDefault;
+        Debug.Log("Reset gravity");
 	}
     public void InvincibleStart()
 	{

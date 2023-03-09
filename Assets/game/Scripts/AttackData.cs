@@ -19,7 +19,10 @@ public class AttackData : AnimationData
 
 
     public bool isFinisher;
+    //public bool isAerial;
     public bool isAOE;
     public bool isRanged;
     public Vector2 activationDistance;
+
+    public List<Transitions> Transitions;
 }

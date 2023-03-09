@@ -40,7 +40,7 @@ public class CharacterAnimation : MonoBehaviour
     public static readonly string OverheadAttack = ("GroundAttack1");
     public static readonly string SidewaysAttack = ("GroundAttack2");
     public static readonly string GroundFarAttack = ("GroundFarAttack");
-    public static readonly string OverheadFinisher = ("GroundFinisher1");
+    public static readonly string OverheadFinisher = ("GroundFinisher");
     public static readonly string SideFinisher = ("GroundFinisher2");
     public static readonly string DownAirAttack = ("AirAttack1");
     public static readonly string UpAirAttack = ("AirAttack2");

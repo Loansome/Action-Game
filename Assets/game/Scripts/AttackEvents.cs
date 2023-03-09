@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackEvents : MonoBehaviour
+[System.Serializable]
+public class AttackEvents
 {
     public void Cancelable()
     {

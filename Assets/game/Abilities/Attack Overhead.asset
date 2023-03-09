@@ -17,15 +17,89 @@ MonoBehaviour:
   abilityPointCost: 0
   duration: 0.838
   cancelTime: 0.538
+  gravityMod: 1
+  startGravity: 0
+  endGravity: 0
   isInvincible: 0
   isGuardable: 0
   animation: 2
-  attackEvents: []
   forwardMove:
     serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.04996624
+      value: -0.2654382
+      inSlope: 1.2285848
+      outSlope: 1.2285848
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.4917468
+    - serializedVersion: 3
+      time: 0.2915746
+      value: 1.30394
+      inSlope: -0.00776922
+      outSlope: -0.00776922
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.97633845
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.44341785
+      value: 0.042288125
+      inSlope: -2.904617
+      outSlope: -2.904617
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.25765905
+    - serializedVersion: 3
+      time: 0.6384548
+      value: 0.40569884
+      inSlope: 12.639597
+      outSlope: 12.639597
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.071690194
+      outWeight: 0.070441075
+    - serializedVersion: 3
+      time: 0.7195887
+      value: 1.0196365
+      inSlope: 0.39277124
+      outSlope: 0.39277124
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.8288153
+      value: 0.45024154
+      inSlope: -6.067004
+      outSlope: -6.067004
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.2869898
+      outWeight: 0.17375816
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 3
+    m_PostInfinity: 3
     m_RotationOrder: 4
   upwardMove:
     serializedVersion: 2
@@ -44,3 +118,12 @@ MonoBehaviour:
   isAOE: 0
   isRanged: 0
   activationDistance: {x: 1, y: 2}
+  Transitions:
+  - Attack: {fileID: 11400000, guid: 986556bce8ede0640b08ac447d495370, type: 2}
+    Priority: 0
+  - Attack: {fileID: 11400000, guid: e47d156dcd4c4fe48899be7d85cc3a27, type: 2}
+    Priority: 0
+  - Attack: {fileID: 11400000, guid: 2ae1782ce903a0c42b8675be3f060c53, type: 2}
+    Priority: 0
+  - Attack: {fileID: 11400000, guid: 0f00fa7a50376a449960dab7a2b7e533, type: 2}
+    Priority: 0

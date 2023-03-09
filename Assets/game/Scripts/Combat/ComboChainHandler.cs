@@ -15,11 +15,13 @@ public class ComboChainHandler : MonoBehaviour
     public AttackData currentAttack;
 
     private AbilityHolder heldAbilities;
+    public AttackContextHandler contextHandler;
 
     // Start is called before the first frame update
     void Start()
     {
         heldAbilities = GetComponent<AbilityHolder>();
+        contextHandler = GetComponent<AttackContextHandler>();
 
         UpdateComboAbilities();
     }
@@ -30,34 +32,36 @@ public class ComboChainHandler : MonoBehaviour
         
     }
 
-    public bool TryCurrentAttack(string attackName)
+    public AttackData TryNextAttack(bool isAerial)
     {
+        bool nextIsFinisher = currentComboPosition < attackLength ? false : true;
         // check if attack is equipped, then set it. if not, skip
-        AttackData newAttack = heldAbilities.FindAttack(attackName);
-        if (newAttack == null) return false;
+        AttackData newAttack = contextHandler.FetchNextAttack(nextIsFinisher, isAerial);
+        //Debug.Log("Finisher = " + nextIsFinisher + newAttack.isFinisher + newAttack.name);
+        if (newAttack == null) return null;
 
         // check if attack isn't the same as the current one and there's room to continue
         if (currentAttack != newAttack)
         {
             if (!newAttack.isFinisher && currentComboPosition < attackLength && currentComboPosition < fullComboLength)
             {
-                return true;
+                return newAttack;
             }
-            else if (newAttack.isFinisher && currentComboPosition < finisherLength && currentComboPosition < fullComboLength)
+            else if (newAttack.isFinisher && currentComboPosition >= attackLength && currentComboPosition < fullComboLength)
             {
-                return true;
+                return newAttack;
             }
         }
-        return false;
+        return null;
     }
 
-    public void SetCurrentAttack(string attackName)
+    public void SetCurrentAttack(AttackData newAttack)
     {
-        AttackData newAttack = heldAbilities.FindAttack(attackName);
         prevAttack = currentAttack;
         currentAttack = newAttack;
         currentComboPosition++;
-        Debug.Log("Set new attack. Combo chain: " + currentComboPosition);
+        contextHandler.SetCurrentAttack(newAttack);
+        Debug.Log("Combo chain: " + currentComboPosition);
     }
 
     public void ResetComboState()
@@ -65,6 +69,7 @@ public class ComboChainHandler : MonoBehaviour
         currentAttack = null;
         currentComboPosition = 0;
         Debug.Log("Combo chain: " + currentComboPosition);
+        contextHandler.ResetCurrentAttack();
 	}
 
     public void UpdateComboAbilities()

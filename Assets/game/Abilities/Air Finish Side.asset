@@ -10,23 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69dd68b88256ecc418776330da98889f, type: 3}
-  m_Name: Attack Side
+  m_Name: Air Finish Side
   m_EditorClassIdentifier: 
-  name: Attack Side
+  name: Air Finish Side
   description: 
   abilityPointCost: 0
-  duration: 0.8
-  cancelTime: 0.648
+  isAerial: 1
+  duration: 0.686
+  cancelTime: 0.386
+  gravityMod: 0
+  startGravity: 0
+  endGravity: 0.352
   isInvincible: 0
   isGuardable: 0
-  animation: 3
-  attackEvents: []
+  animation: 10
   forwardMove:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.6506958
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -34,40 +37,13 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.17786345
-      value: -0.4899972
+      time: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.3302115
-      value: 0
-      inSlope: 3.8725722
-      outSlope: 3.8725722
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.29175723
-      outWeight: 0.54893327
-    - serializedVersion: 3
-      time: 0.45767522
-      value: 1.4996556
-      inSlope: -8.284084
-      outSlope: -8.284084
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.050812423
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0.016159298
-      outSlope: 0.016159298
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.412352
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 3
     m_PostInfinity: 3
@@ -85,7 +61,10 @@ MonoBehaviour:
   knockbackType: 0
   isCounterAttack: 0
   isKillable: 0
-  isFinisher: 0
+  isFinisher: 1
   isAOE: 0
   isRanged: 0
   activationDistance: {x: 0, y: 0}
+  Transitions:
+  - Attack: {fileID: 11400000, guid: 94f2abc3d633e284c96e039490382496, type: 2}
+    Priority: 0
