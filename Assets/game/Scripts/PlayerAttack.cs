@@ -6,9 +6,7 @@ using KinematicCharacterController;
 public enum ComboState
 {
     NONE,
-    JAB,
-    FINISH,
-    KISS,
+    ATTACK,
     DODGE,
     MAGIC
 }
@@ -19,7 +17,6 @@ public class PlayerAttack : MonoBehaviour
     private CharacterAnimation playerAnimation;
 
     private bool inAttack;
-    private float defaultComboTimer = 0.7f;
     private float attackDuration;
     private float comboTime = 1;
     private float cancelTime;
@@ -61,47 +58,17 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (currentComboState)
-        {
-            default:
-            case ComboState.NONE:
-                CheckAttack();
-                break;
-            case ComboState.JAB:
-                CheckAttack();
-                break;
-            case ComboState.FINISH:
-                Finish();
-                break;
-            case ComboState.DODGE:
-                CheckAttack();
-                break;
-            case ComboState.MAGIC:
-                Magic();
-                break;
-        }
-        if (currentAttack) ManageEvents();
+        CheckAttack();
+
+        if (currentAttack)
+            ManageEvents();
+
         ResetComboState();
     }
 
-    public void SetActionState(ComboState newState)
-	{
-        TrySetState(newState);
-	}
-
-    private bool TrySetState(ComboState newState)
-	{
-        if (newState == currentComboState) return false;
-        else
-        {
-            currentComboState = newState;
-            return true;
-        }
-	}
-
     private void ManageEvents()
 	{
-        if (comboTime >= currentAttack.startGravity && comboTime <= currentAttack.endGravity)
+        if ( currentAttack.gravityTimeframe.x <= comboTime && comboTime <= currentAttack.gravityTimeframe.y)
         {
             characterController.GravityMod = currentAttack.gravityMod;
         }
@@ -118,16 +85,54 @@ public class PlayerAttack : MonoBehaviour
         inputMagic = magic;
 	}
 
-    private void SetAttackByName(string attackName)
+	#region StateMachine
+
+	private void CheckAttack()
 	{
-        currentAttack = equippedAbilities.FindAttack(attackName);
-        playerAnimation.TriggerAnimation(currentAttack.animation);
-        inAttack = true;
-        attackDuration = currentAttack.duration;
-        //Debug.Log(playerAnimation.FindAnimation(currentAttack.animation));
-        //currentComboTimer = 0;
-        cancelTime = currentAttack.cancelTime;
-        characterController.TransitionToState(CharacterState.Attack);
+        if (inputAttack) // check if player attacks
+        {
+            Attack();
+        }
+        else if (inputDodge) // check if player dodges
+        {
+            Dodge();
+        }
+    }
+
+    private void None() { }
+
+    private void Attack() {
+        if ((currentComboState == ComboState.ATTACK && cancelTime <= comboTime || currentComboState == ComboState.NONE)) // check if player attacks
+        {
+            AttackData newAttack = comboChain.TryNextAttack(!characterController.IsGrounded());
+            if (newAttack != null)
+            {
+                comboChain.SetCurrentAttack(newAttack);
+                SetAttack(newAttack);
+                Debug.Log("Attack");
+                currentComboState = ComboState.ATTACK;
+            }
+        }
+    }
+
+    private void Dodge() {
+        if (equippedAbilities.IsEquipped("Dodge Roll") && (currentComboState == ComboState.NONE && characterController.IsGrounded())) // check if player dodges
+        {
+            SetAnimation("Dodge Roll");
+            Debug.Log("Dodge");
+            currentComboState = ComboState.DODGE;
+        }
+    }
+    private void Magic() {
+        if (inputMagic)
+        {
+            if (currentComboState != ComboState.NONE)
+                return;
+
+            currentComboState = ComboState.MAGIC;
+            inAttack = true;
+            comboTime = playerAnimation.GetCurrentAnimationTime();
+        }
     }
 
     private void SetAttack(AttackData newAttack)
@@ -136,8 +141,6 @@ public class PlayerAttack : MonoBehaviour
         playerAnimation.TriggerAnimation(currentAttack.animation);
         inAttack = true;
         attackDuration = currentAttack.duration;
-        //Debug.Log(playerAnimation.FindAnimation(currentAttack.animation));
-        //currentComboTimer = 0;
         cancelTime = currentAttack.cancelTime;
         characterController.TransitionToState(CharacterState.Attack);
     }
@@ -148,93 +151,13 @@ public class PlayerAttack : MonoBehaviour
         playerAnimation.TriggerAnimation(currentAnimation.animation);
         inAttack = true;
         attackDuration = currentAnimation.duration;
-        //attackDuration = playerAnimation.FindAnimation(currentAnimation.animation).length;
-        //Debug.Log(playerAnimation.FindAnimation(currentAttack.animation));
         cancelTime = currentAnimation.cancelTime;
         characterController.TransitionToState(CharacterState.Attack);
     }
 
-	#region StateMachine
+    #endregion
 
-	private void CheckAttack()
-	{
-        if (inputAttack) // check if player attacks
-        {
-            Jab();
-        }
-        else if (inputDodge) // check if player dodges
-        {
-            Dodge();
-        }
-    }
-
-    private bool JabConditions()
-	{
-        if ((currentComboState == ComboState.JAB && cancelTime <= comboTime || currentComboState == ComboState.NONE)) // don't punch if end of combo/kicking
-            return true;
-        else return false;
-    }
-    private bool DodgeConditions()
-	{
-        if (equippedAbilities.IsEquipped("Dodge Roll") && (currentComboState == ComboState.NONE && characterController.IsGrounded()))
-            return true;
-        else return false;
-
-    }
-
-    private void None() { }
-
-    private void Jab() {
-        if (JabConditions()) // check if player attacks
-        {
-            AttackData newAttack = comboChain.TryNextAttack(!characterController.IsGrounded());
-            if (newAttack != null)
-            {
-                currentAttack = newAttack;
-                comboChain.SetCurrentAttack(newAttack);
-                SetAttack(newAttack);
-                playerAnimation.Attack();
-                Debug.Log("Jab");
-                TrySetState(ComboState.JAB);
-            }
-
-            /*Collider[] hitEnemies = Physics.OverlapBox(attackPoint.position, attackRange, Quaternion.Euler(0,0,0), enemyLayers);
-            foreach (Collider enemy in hitEnemies)
-            {
-                enemy.GetComponent<EnemyMovement>().TakeDamage(1);
-            }*/
-        }
-    }
-
-    private void Finish() { }
-
-    private void Dodge() {
-        if (DodgeConditions()) // check if player dodges
-        {
-            SetAnimation("Dodge Roll");
-            playerAnimation.Guard();
-            Debug.Log("Dodge");
-            TrySetState(ComboState.DODGE);
-        }
-    }
-    private void Magic() {
-        if (inputMagic)
-        {
-            if (currentComboState != ComboState.NONE)
-                return;
-
-            currentComboState++;
-            inAttack = true;
-            comboTime = defaultComboTimer + .1f;
-
-            currentComboState = ComboState.MAGIC;
-            playerAnimation.Magic();
-        }
-    }
-
-	#endregion
-
-	void ResetComboState() // counts down combo timer, resets combo when time is up
+    void ResetComboState() // counts down combo timer, resets combo when time is up
     {
         if (inAttack)
         {
@@ -252,12 +175,5 @@ public class PlayerAttack : MonoBehaviour
                 Debug.Log("RESET");
             }
         }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null)
-            return;
-        Gizmos.DrawWireCube(attackPoint.position, attackRange);
     }
 }

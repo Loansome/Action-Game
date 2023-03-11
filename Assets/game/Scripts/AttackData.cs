@@ -22,7 +22,7 @@ public class AttackData : AnimationData
     //public bool isAerial;
     public bool isAOE;
     public bool isRanged;
-    public Vector2 activationDistance;
+    [MinTo(15)]public Vector2 activationDistance;
 
     public List<Transitions> Transitions;
 }

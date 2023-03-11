@@ -325,7 +325,7 @@ ModelImporter:
           curve:
           - serializedVersion: 3
             time: 0.012500763
-            value: 0.99963844
+            value: 1.1246767
             inSlope: 0
             outSlope: 0
             tangentMode: 0
@@ -340,6 +340,49 @@ ModelImporter:
             tangentMode: 0
             weightedMode: 0
             inWeight: 0
+            outWeight: 0
+          preInfinity: 3
+          postInfinity: 3
+          rotationOrder: 4
+      - name: RootUp
+        curve:
+          serializedVersion: 2
+          curve:
+          - serializedVersion: 3
+            time: 0
+            value: 2.8662207
+            inSlope: 22.27154
+            outSlope: 22.27154
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 1
+          - serializedVersion: 3
+            time: 0.122362316
+            value: 4.3001614
+            inSlope: 0.03682804
+            outSlope: 0.03682804
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.40397376
+            value: -3.3464613
+            inSlope: -24.8582
+            outSlope: -24.8582
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.16912949
+          - serializedVersion: 3
+            time: 1
+            value: -9.552254
+            inSlope: -1.0791305
+            outSlope: -1.0791305
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.1687764
             outWeight: 0
           preInfinity: 3
           postInfinity: 3
@@ -378,8 +421,8 @@ ModelImporter:
           serializedVersion: 2
           curve:
           - serializedVersion: 3
-            time: 0
-            value: 0.35004568
+            time: 0.012500763
+            value: 1.1246767
             inSlope: 0
             outSlope: 0
             tangentMode: 0
@@ -394,6 +437,49 @@ ModelImporter:
             tangentMode: 0
             weightedMode: 0
             inWeight: 0
+            outWeight: 0
+          preInfinity: 3
+          postInfinity: 3
+          rotationOrder: 4
+      - name: RootUp
+        curve:
+          serializedVersion: 2
+          curve:
+          - serializedVersion: 3
+            time: 0
+            value: 2.8662207
+            inSlope: 22.27154
+            outSlope: 22.27154
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 1
+          - serializedVersion: 3
+            time: 0.122362316
+            value: 4.3001614
+            inSlope: 0.03682804
+            outSlope: 0.03682804
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.40397376
+            value: -3.3464613
+            inSlope: -24.8582
+            outSlope: -24.8582
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.16912949
+          - serializedVersion: 3
+            time: 1
+            value: -9.552254
+            inSlope: -1.0791305
+            outSlope: -1.0791305
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.1687764
             outWeight: 0
           preInfinity: 3
           postInfinity: 3
@@ -577,8 +663,8 @@ ModelImporter:
           serializedVersion: 2
           curve:
           - serializedVersion: 3
-            time: 0
-            value: 0.65130675
+            time: 0.012500763
+            value: 1.3017931
             inSlope: 0
             outSlope: 0
             tangentMode: 0
@@ -593,6 +679,49 @@ ModelImporter:
             tangentMode: 0
             weightedMode: 0
             inWeight: 0
+            outWeight: 0
+          preInfinity: 3
+          postInfinity: 3
+          rotationOrder: 4
+      - name: RootUp
+        curve:
+          serializedVersion: 2
+          curve:
+          - serializedVersion: 3
+            time: 0
+            value: 2.8662207
+            inSlope: 22.27154
+            outSlope: 22.27154
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 1
+          - serializedVersion: 3
+            time: 0.122362316
+            value: 4.3001614
+            inSlope: 0.03682804
+            outSlope: 0.03682804
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.40397376
+            value: -3.3464613
+            inSlope: -24.8582
+            outSlope: -24.8582
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.16912949
+          - serializedVersion: 3
+            time: 1
+            value: -9.552254
+            inSlope: -1.0791305
+            outSlope: -1.0791305
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.1687764
             outWeight: 0
           preInfinity: 3
           postInfinity: 3
@@ -631,8 +760,8 @@ ModelImporter:
           serializedVersion: 2
           curve:
           - serializedVersion: 3
-            time: 0
-            value: 0.6506958
+            time: 0.012500763
+            value: 1.3017931
             inSlope: 0
             outSlope: 0
             tangentMode: 0
@@ -647,6 +776,49 @@ ModelImporter:
             tangentMode: 0
             weightedMode: 0
             inWeight: 0
+            outWeight: 0
+          preInfinity: 3
+          postInfinity: 3
+          rotationOrder: 4
+      - name: RootUp
+        curve:
+          serializedVersion: 2
+          curve:
+          - serializedVersion: 3
+            time: 0
+            value: 2.8662207
+            inSlope: 22.27154
+            outSlope: 22.27154
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 1
+          - serializedVersion: 3
+            time: 0.122362316
+            value: 4.3001614
+            inSlope: 0.03682804
+            outSlope: 0.03682804
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.40397376
+            value: -3.3464613
+            inSlope: -24.8582
+            outSlope: -24.8582
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.16912949
+          - serializedVersion: 3
+            time: 1
+            value: -9.552254
+            inSlope: -1.0791305
+            outSlope: -1.0791305
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.1687764
             outWeight: 0
           preInfinity: 3
           postInfinity: 3
@@ -1890,7 +2062,7 @@ ModelImporter:
       name: Rig|M_AerialFinish
       takeName: Rig|M_AerialFinish
       internalID: 0
-      firstFrame: 0
+      firstFrame: 60
       lastFrame: 175
       wrapMode: 0
       orientationOffsetY: 0
@@ -1909,7 +2081,75 @@ ModelImporter:
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
+      curves:
+      - name: RootForward
+        curve:
+          serializedVersion: 2
+          curve:
+          - serializedVersion: 3
+            time: 0
+            value: 2.008838
+            inSlope: -7.643746
+            outSlope: -7.643746
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.08319819
+          - serializedVersion: 3
+            time: 0.6085819
+            value: 0.16211653
+            inSlope: 0.032946147
+            outSlope: 0.032946147
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.23475616
+          - serializedVersion: 3
+            time: 0.9000826
+            value: 0.11578635
+            inSlope: -0.88888353
+            outSlope: -0.88888353
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.6087819
+            outWeight: 1
+          - serializedVersion: 3
+            time: 1
+            value: 0.019470215
+            inSlope: -0.42639732
+            outSlope: -0.42639732
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.46353137
+            outWeight: 0
+          preInfinity: 3
+          postInfinity: 3
+          rotationOrder: 4
+      - name: RootUp
+        curve:
+          serializedVersion: 2
+          curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          preInfinity: 3
+          postInfinity: 3
+          rotationOrder: 4
       events: []
       transformMask: []
       maskType: 3

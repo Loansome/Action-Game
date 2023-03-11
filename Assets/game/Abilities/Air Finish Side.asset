@@ -15,12 +15,11 @@ MonoBehaviour:
   name: Air Finish Side
   description: 
   abilityPointCost: 0
+  cancelTime: 0.39
+  duration: 0.665
   isAerial: 1
-  duration: 0.686
-  cancelTime: 0.386
   gravityMod: 0
-  startGravity: 0
-  endGravity: 0.352
+  gravityTimeframe: {x: 0, y: 0}
   isInvincible: 0
   isGuardable: 0
   animation: 10
@@ -67,4 +66,6 @@ MonoBehaviour:
   activationDistance: {x: 0, y: 0}
   Transitions:
   - Attack: {fileID: 11400000, guid: 94f2abc3d633e284c96e039490382496, type: 2}
+    Priority: 0
+  - Attack: {fileID: 11400000, guid: 47bda87f5cbce0845961b7e7ed80c6d1, type: 2}
     Priority: 0

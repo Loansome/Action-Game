@@ -6,12 +6,11 @@ using UnityEngine;
 public class AnimationData : AbilityData
 {
     [Header("Animation Info")]
-    public bool isAerial = false;
-    [Range(0f, 1f)] public float duration;
     [Range(0f, 1f)] public float cancelTime;
+    [Range(0f, 1f)] public float duration;
+    public bool isAerial = false;
     [Range(0f, 1f)] public float gravityMod = 1;
-    [Range(0f, 1f)] public float startGravity;
-    [Range(0f, 1f)] public float endGravity;
+    [MinTo(1)] public Vector2 gravityTimeframe;
     public bool isInvincible;
     public bool isGuardable;
 

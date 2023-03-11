@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69dd68b88256ecc418776330da98889f, type: 3}
-  m_Name: Air Attack Up
+  m_Name: Aerial Finish
   m_EditorClassIdentifier: 
-  name: Air Attack Up
+  name: Aerial Finish
   description: 
   abilityPointCost: 0
-  cancelTime: 0.339
-  duration: 0.772
+  cancelTime: 0.669
+  duration: 0.809
   isAerial: 1
   gravityMod: 0
-  gravityTimeframe: {x: 0, y: 0}
+  gravityTimeframe: {x: 0, y: 0.6471493}
   isInvincible: 0
   isGuardable: 0
-  animation: 8
+  animation: 13
   forwardMove:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.35004568
+      value: 0.65130675
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -56,20 +56,16 @@ MonoBehaviour:
   damage: 0
   damageArmor: 0
   damageRevenge: 0
-  damageAttribute: 4
+  damageAttribute: 0
   knockbackType: 0
   isCounterAttack: 0
   isKillable: 0
-  isFinisher: 0
+  isFinisher: 1
   isAOE: 0
   isRanged: 0
   activationDistance: {x: 0, y: 0}
   Transitions:
-  - Attack: {fileID: 11400000, guid: b496d863feaeddc41b061710eb62bbae, type: 2}
-    Priority: 0
   - Attack: {fileID: 11400000, guid: 94f2abc3d633e284c96e039490382496, type: 2}
     Priority: 0
   - Attack: {fileID: 11400000, guid: 5e0c4438ed5db8c47b236c5520c74972, type: 2}
-    Priority: 0
-  - Attack: {fileID: 11400000, guid: 47bda87f5cbce0845961b7e7ed80c6d1, type: 2}
     Priority: 0

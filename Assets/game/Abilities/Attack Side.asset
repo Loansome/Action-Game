@@ -15,12 +15,15 @@ MonoBehaviour:
   name: Attack Side
   description: 
   abilityPointCost: 0
+  isAerial: 0
   duration: 0.8
-  cancelTime: 0.648
+  cancelTime: 0.517
+  gravityMod: 1
+  startGravity: 0
+  endGravity: 0
   isInvincible: 0
   isGuardable: 0
   animation: 3
-  attackEvents: []
   forwardMove:
     serializedVersion: 2
     m_Curve:
@@ -89,3 +92,12 @@ MonoBehaviour:
   isAOE: 0
   isRanged: 0
   activationDistance: {x: 0, y: 0}
+  Transitions:
+  - Attack: {fileID: 11400000, guid: a9d491798d8c2374d809ab665d398447, type: 2}
+    Priority: 0
+  - Attack: {fileID: 11400000, guid: 986556bce8ede0640b08ac447d495370, type: 2}
+    Priority: 0
+  - Attack: {fileID: 11400000, guid: 2ae1782ce903a0c42b8675be3f060c53, type: 2}
+    Priority: 0
+  - Attack: {fileID: 11400000, guid: 0f00fa7a50376a449960dab7a2b7e533, type: 2}
+    Priority: 0

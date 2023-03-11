@@ -5,7 +5,6 @@ using UnityEngine;
 public class AttackContextHandler : MonoBehaviour
 {
     AbilityHolder heldAbilities;
-    AttackData currentAttack;
 
     // Start is called before the first frame update
     void Start()
@@ -19,22 +18,12 @@ public class AttackContextHandler : MonoBehaviour
         
     }
 
-    public void SetNewAttack(bool isFinisher, bool isAerial)
-	{
-        AttackData nextAttack = FetchNextAttack(isFinisher, isAerial);
-        if (nextAttack != null)
-		{
-            SetCurrentAttack(nextAttack);
-		}
-	}
-
-    public AttackData FetchNextAttack(bool checkFinisher, bool checkAerial)
+    public AttackData FetchNextAttack(AttackData lastAttack, bool checkFinisher, bool checkAerial)
 	{
         List<AttackData> equippedAttacks = new List<AttackData>(CheckAvailableAttacks(checkFinisher, checkAerial));
-        if (currentAttack != null)
+        if (lastAttack != null)
         {
-            
-            foreach (Transitions attack in currentAttack.Transitions)
+            foreach (Transitions attack in lastAttack.Transitions)
             {
                 if (equippedAttacks.Contains(attack.Attack))
                 {
@@ -48,7 +37,7 @@ public class AttackContextHandler : MonoBehaviour
 	}
 
     private AttackData[] CheckAvailableAttacks(bool checkFinisher, bool checkAerial)
-	{
+    {
         List<AttackData> availableAttacks = new List<AttackData>();
         AttackData attack = null;
         foreach (Ability ability in heldAbilities.abilities)
@@ -56,12 +45,14 @@ public class AttackContextHandler : MonoBehaviour
             try
             {
                 attack = (AttackData)ability.abilityData;
-            } catch
-			{
+            }
+            catch
+            {
                 attack = null;
-			}
+            }
             // checks if the ability is an attack, if it's equipped, and if it's a finisher or aerial attack
-            if (attack != null) {
+            if (attack != null)
+            {
 
                 if ((ability.abilityState == AbilityState.Equipped || ability.abilityState == AbilityState.LockEquipped)
                     && attack.isFinisher == checkFinisher
@@ -74,22 +65,4 @@ public class AttackContextHandler : MonoBehaviour
         }
         return availableAttacks.ToArray();
     }
-
-    private bool CheckFinisher(AttackData attack)
-	{
-        return attack.isFinisher;
-	}
-    private bool CheckAerial(AttackData attack)
-    {
-        return attack.isAerial;
-    }
-
-    public void SetCurrentAttack(AttackData newAttack)
-	{
-        currentAttack = newAttack;
-	}
-    public void ResetCurrentAttack()
-	{
-        currentAttack = null;
-	}
 }

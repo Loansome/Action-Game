@@ -15,12 +15,11 @@ MonoBehaviour:
   name: Air Finish Down
   description: 
   abilityPointCost: 0
+  cancelTime: 0.385
+  duration: 0.695
   isAerial: 1
-  duration: 0.788
-  cancelTime: 0.36
   gravityMod: 0
-  startGravity: 0
-  endGravity: 0.326
+  gravityTimeframe: {x: 0, y: 0}
   isInvincible: 0
   isGuardable: 0
   animation: 9
@@ -67,4 +66,6 @@ MonoBehaviour:
   activationDistance: {x: 0, y: 0}
   Transitions:
   - Attack: {fileID: 11400000, guid: 5e0c4438ed5db8c47b236c5520c74972, type: 2}
+    Priority: 0
+  - Attack: {fileID: 11400000, guid: 47bda87f5cbce0845961b7e7ed80c6d1, type: 2}
     Priority: 0

@@ -15,12 +15,11 @@ MonoBehaviour:
   name: Air Attack Down
   description: 
   abilityPointCost: 0
+  cancelTime: 0.314
+  duration: 0.708
   isAerial: 1
-  duration: 0.784
-  cancelTime: 0.343
   gravityMod: 0
-  startGravity: 0
-  endGravity: 0.288
+  gravityTimeframe: {x: 0, y: 0}
   isInvincible: 0
   isGuardable: 0
   animation: 7
@@ -71,4 +70,6 @@ MonoBehaviour:
   - Attack: {fileID: 11400000, guid: 94f2abc3d633e284c96e039490382496, type: 2}
     Priority: 0
   - Attack: {fileID: 11400000, guid: 5e0c4438ed5db8c47b236c5520c74972, type: 2}
+    Priority: 0
+  - Attack: {fileID: 11400000, guid: 47bda87f5cbce0845961b7e7ed80c6d1, type: 2}
     Priority: 0

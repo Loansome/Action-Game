@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using System.Linq;
 
 public class AbilityHolder : MonoBehaviour
 {
 	public List<Ability> abilities = new List<Ability>();
-	private ComboChainHandler comboChain;
+	[SerializeField] private ComboChainHandler comboChain;
 	//public Dictionary<enum?, string> abilityName; // create list to better organize names, making sure there are no mispells
 
 	private void Start()
 	{
-		comboChain = GetComponent<ComboChainHandler>();
+		
 	}
 	private void OnValidate()
 	{
@@ -69,17 +70,24 @@ public class AbilityHolder : MonoBehaviour
 		return (AttackData)FindAbilityByName(name).abilityData;
 	}
 
-	private void OnDrawGizmosSelected()
+	private void OnDrawGizmos()
 	{
 		foreach (var item in abilities)
 		{
-			AttackData currentAbility = (AttackData)item.abilityData;
+			AttackData currentAbility = null;
+			try
+			{
+				currentAbility = (AttackData)item.abilityData;
+			} catch
+			{
+				currentAbility = null;
+			}
 			if (currentAbility != null)
 			{
-				Gizmos.color = Color.yellow;
-				Gizmos.DrawWireSphere(transform.position, currentAbility.activationDistance.x);
-				Gizmos.color = Color.cyan;
-				Gizmos.DrawWireSphere(transform.position, currentAbility.activationDistance.y);
+				Handles.color = Color.green;
+				Handles.DrawWireDisc(transform.position, transform.up, currentAbility.activationDistance.x);
+				Handles.color = Color.yellow;
+				Handles.DrawWireDisc(transform.position, transform.up, currentAbility.activationDistance.y);
 			}
 		}
 	}

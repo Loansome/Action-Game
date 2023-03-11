@@ -127,7 +127,7 @@ namespace KinematicCharacterController
                 case CharacterState.Attack:
 					{
                         // set the movement and lock on to enemy
-                        _attackMoveVelocity = Motor.CharacterForward * playerAnim.GetRootCurve();
+                        _attackMoveVelocity = Motor.CharacterForward * playerAnim.GetForwardCurve();
                         _targetDirection = _targetCurrentPosition - new Vector2(transform.position.x, transform.position.z);
                         break;
 					}
@@ -396,18 +396,20 @@ namespace KinematicCharacterController
                         // when attacking, attach velocities to keep it moving
                         if (Motor.GroundingStatus.IsStableOnGround)
                         {
-                            currentVelocity = Motor.CharacterForward * playerAnim.GetRootCurve() * MaxStableMoveSpeed;
+                            currentVelocity = Motor.CharacterForward * playerAnim.GetForwardCurve() * MaxStableMoveSpeed;
                         }
                         else
                         {
                             // If we want to move, add an acceleration to the velocity
-                            Vector3 targetMovementVelocity = Motor.CharacterForward * playerAnim.GetRootCurve() * MaxAirMoveSpeed;
-                            Vector3 velocityDiff = Vector3.ProjectOnPlane(targetMovementVelocity - currentVelocity, Gravity * GravityMod);
+                            Vector3 targetMovementVelocity = Motor.CharacterForward * playerAnim.GetForwardCurve() * MaxAirMoveSpeed;
+                            Vector3 velocityDiff = Vector3.ProjectOnPlane(targetMovementVelocity - currentVelocity, Gravity);
                             currentVelocity += velocityDiff * AirAccelerationSpeed * deltaTime;
 
                             //currentVelocity += Motor.CharacterForward * playerAnim.getRootCurve() * AttackMoveSpeed;
                             currentVelocity += Gravity * GravityMod * deltaTime;
                             currentVelocity *= (1f / (1f + (Drag * deltaTime)));
+
+                            currentVelocity += (Motor.CharacterUp * playerAnim.GetUpwardCurve()) - Vector3.Project(currentVelocity, Motor.CharacterUp);
                         }
                         break;
 					}

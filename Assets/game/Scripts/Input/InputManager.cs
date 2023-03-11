@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using KinematicCharacterController;
+using Cinemachine;
 
 public class InputManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class InputManager : MonoBehaviour
     private CharacterMovement charaMove;
     private MyCharacterController characterController;
     private CharacterAnimation playerAnim;
+    [SerializeField] private GameObject cinema;
 
     private PlayerInput playerInput;
 
@@ -19,6 +21,7 @@ public class InputManager : MonoBehaviour
     private InputAction selectAction;
     private InputAction guardAction;
     private InputAction magicAction;
+    private InputAction pauseAction;
 
     private void OnEnable()
 	{
@@ -50,6 +53,7 @@ public class InputManager : MonoBehaviour
         selectAction = playerInput.actions["Select"];
         guardAction = playerInput.actions["Guard"];
         magicAction = playerInput.actions["Magic"];
+        pauseAction = playerInput.actions["Pause"];
 
         Cursor.lockState = CursorLockMode.Locked;
         //Debug.Log("End starting");
@@ -65,8 +69,12 @@ public class InputManager : MonoBehaviour
             Debug.Log("Attack");
             playerAttack.SetAction(ComboState.JAB);
 		}*/
+        if (pauseAction.triggered)
+        {
+            cinema.GetComponent<CinemachineInputProvider>().enabled = !cinema.GetComponent<CinemachineInputProvider>().enabled;
+        }
 
-        AnimationUpdate();
+            AnimationUpdate();
 
         CharacterControllerUpdate();
 

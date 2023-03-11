@@ -36,7 +36,7 @@ public class ComboChainHandler : MonoBehaviour
     {
         bool nextIsFinisher = currentComboPosition < attackLength ? false : true;
         // check if attack is equipped, then set it. if not, skip
-        AttackData newAttack = contextHandler.FetchNextAttack(nextIsFinisher, isAerial);
+        AttackData newAttack = contextHandler.FetchNextAttack(currentAttack, nextIsFinisher, isAerial);
         //Debug.Log("Finisher = " + nextIsFinisher + newAttack.isFinisher + newAttack.name);
         if (newAttack == null) return null;
 
@@ -60,7 +60,6 @@ public class ComboChainHandler : MonoBehaviour
         prevAttack = currentAttack;
         currentAttack = newAttack;
         currentComboPosition++;
-        contextHandler.SetCurrentAttack(newAttack);
         Debug.Log("Combo chain: " + currentComboPosition);
     }
 
@@ -69,7 +68,6 @@ public class ComboChainHandler : MonoBehaviour
         currentAttack = null;
         currentComboPosition = 0;
         Debug.Log("Combo chain: " + currentComboPosition);
-        contextHandler.ResetCurrentAttack();
 	}
 
     public void UpdateComboAbilities()

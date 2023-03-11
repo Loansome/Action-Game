@@ -15,11 +15,11 @@ MonoBehaviour:
   name: Attack Overhead
   description: 
   abilityPointCost: 0
-  duration: 0.838
-  cancelTime: 0.538
+  cancelTime: 0.576
+  duration: 0.81
+  isAerial: 0
   gravityMod: 1
-  startGravity: 0
-  endGravity: 0
+  gravityTimeframe: {x: 0, y: 0}
   isInvincible: 0
   isGuardable: 0
   animation: 2
